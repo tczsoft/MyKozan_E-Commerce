@@ -14,7 +14,7 @@ orderRoutes.post("/orders",authMiddleware(['Admin','Customer']), createOrder);
 orderRoutes.get("/orders",authMiddleware(['Admin','Customer']), getAllOrders);
 orderRoutes.put("/orders/updatebyid" ,authMiddleware(['Admin']), updateOrderStatus);
 orderRoutes.delete("/orders/deletebyid" ,authMiddleware(['Admin','Customer']), deleteOrder);
-orderRoutes.get("/orders/getbyid", getOrderById);
+orderRoutes.get("/orders/getbyid",authMiddleware(['Admin','Customer']), getOrderById);
 
 
 export default orderRoutes;

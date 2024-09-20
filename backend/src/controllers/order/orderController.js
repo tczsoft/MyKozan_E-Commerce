@@ -1,5 +1,6 @@
 import moment from "moment-timezone";
 import { Order, Ordermaster } from "../../models/OrderModel.js";
+import { Product  } from "../../models/ProductModel.js";
 
 
 // Get all orders
@@ -55,6 +56,13 @@ const getFinancialYear = (date) => {
         Order_id: uniqueOrderId, // Use the same Order_id for ordermaster
       }));
       await Ordermaster.insertMany(productOrders);
+         // Reduce stock for each product ordered
+    for (const product of ordermaster) {
+        await Product.findOneAndUpdate(
+          { Product_Name: product.Product_Name },
+          { $inc: { Avail_Stock: -product.Quantity } } // Decrease stock based on quantity ordered
+        );
+      }
       res.send({ order: savedOrder, products: productOrders });
     } catch (error) {
       console.error(error);
@@ -87,7 +95,7 @@ export const updateOrderStatus = async (req, res) => {
     const statusHasChanged = currentOrder.Order_Status !== Order_Status;
     const updateFields = { Order_Status };
     if (statusHasChanged) {
-      updateFields.Updated_At = moment().format(); // Use moment to format date
+      updateFields.Updated_At = moment().format(); 
     }
     const updatedOrder = await Order.findByIdAndUpdate(_id, updateFields, { new: true });
     res.send({ message: "Order updated successfully", updatedOrder });
@@ -114,21 +122,27 @@ export const updateOrderStatus = async (req, res) => {
 export const deleteOrder = async (req, res) => {
   try {
     const { Order_id } = req.query;
-
-    // Delete from both Order and OrderMaster collections
+    const orderItems = await Ordermaster.find({ Order_id });
     const deletedOrder = await Order.findOneAndDelete({ Order_id });
-    const deletedOrderMaster = await Ordermaster.deleteMany({ Order_id });
+                         await Ordermaster.deleteMany({ Order_id });
+    
 
     if (!deletedOrder) {
-      return res.status(404).json({ message: "Order not found" });
+      return res.send({ message: "Order not found" });
+    }
+     
+    for (const item of orderItems) {
+      await Product.findOneAndUpdate(
+        { Product_Name: item.Product_Name },
+        { $inc: { Avail_Stock: +item.Quantity } } // Increase stock back based on quantity in the order
+      );
     }
 
     res
       .send({
         message: "Order deleted successfully",
         deletedOrder,
-        deletedOrderMaster,
-      });
+              });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error deleting order", error });
