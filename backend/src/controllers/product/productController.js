@@ -3,11 +3,20 @@ import { Product } from '../../models/ProductModel.js';
 
 export const createProduct = async (req, res) => {
       try {
-        const newProduct = new Product(req.body);
+        const lastProduct = await Product.findOne().sort({ createdAt: -1 });
+        let newItemCode = 'Item001';
+        if (lastProduct && lastProduct.Item_Code) {
+        
+            const lastItemCodeNumber = parseInt(lastProduct.Item_Code.replace('Item', ''), 10);
+      
+            const nextItemCodeNumber = lastItemCodeNumber + 1;
+            newItemCode = `Item${nextItemCodeNumber.toString().padStart(3, '0')}`; 
+          }
+      
+        const newProduct = new Product({ ...req.body, Item_Code: newItemCode });
         const savedProduct = await newProduct.save();
-        res.status(200).json(savedProduct);
+        res.send(savedProduct);
       } catch (error) {
-        // res.status(400).json({ message: error.message });
         console.log(error);
       }
     }
@@ -16,9 +25,9 @@ export const createProduct = async (req, res) => {
     export const getAllProducts= async (req, res) => {
         try {
           const products = await Product.find();
-          res.status(200).json(products);
+          res.send(products);
         } catch (error) {
-        //   res.status(500).json({ message: error.message });
+     
         console.log(error);
         }
       }
@@ -50,14 +59,9 @@ export const createProduct = async (req, res) => {
     // Update product by ID
     export const updateProduct= async (req, res) => {
         try {
-            const { id } = req.query;
-            const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
-
-            if (!updatedProduct) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-
-            res.status(200).json(updatedProduct);
+            const { _id } = req.query;
+            const updatedProduct = await Product.findByIdAndUpdate( { _id } , req.body, { new: true });
+                 res.send(updatedProduct);
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: error.message });
@@ -67,14 +71,10 @@ export const createProduct = async (req, res) => {
     // Delete product by ID
     export const deleteProduct= async (req, res) => {
         try {
-            const { id } = req.query;
-            const deletedProduct = await Product.findByIdAndDelete(id);
+            const { _id } = req.query;
+            const deletedProduct = await Product.findByIdAndDelete( { _id } );
 
-            if (!deletedProduct) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-
-            res.status(200).json({ message: 'Product deleted successfully' });
+            res.status(200).json({ message: 'Product deleted successfully', deletedProduct });
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: error.message });

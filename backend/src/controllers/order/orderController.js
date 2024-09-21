@@ -3,7 +3,7 @@ import { Order, Ordermaster } from "../../models/OrderModel.js";
 import { Product  } from "../../models/ProductModel.js";
 
 
-// Get all orders
+
 export const getAllOrders = async (req, res ) => {
     try {
       const { Role, Email } = req.user;
@@ -51,16 +51,13 @@ const getFinancialYear = (date) => {
       const uniqueOrderId2 = `MYKOINV_${getFinancialYear(moment())}_${ count + 1}`;
       const orderWithId = { ...order, Order_id: uniqueOrderId ,Invoice_ID: uniqueOrderId2 };
       const savedOrder = await new Order(orderWithId).save();
-      const productOrders = ordermaster.map((product) => ({
-        ...product,
-        Order_id: uniqueOrderId, // Use the same Order_id for ordermaster
-      }));
+      const productOrders = ordermaster.map((product) => ({ ...product, Order_id: uniqueOrderId,  }));
       await Ordermaster.insertMany(productOrders);
-         // Reduce stock for each product ordered
+         
     for (const product of ordermaster) {
         await Product.findOneAndUpdate(
           { Product_Name: product.Product_Name },
-          { $inc: { Avail_Stock: -product.Quantity } } // Decrease stock based on quantity ordered
+          { $inc: { Avail_Stock: -product.Quantity } } 
         );
       }
       res.send({ order: savedOrder, products: productOrders });
@@ -70,7 +67,7 @@ const getFinancialYear = (date) => {
     }
   };
 
-// Get order by Order ID
+
 export const getOrderById = async (req, res) => {
   try {
     const { Order_id } = req.query;
@@ -82,16 +79,14 @@ export const getOrderById = async (req, res) => {
   }
 };
 
-// Update order status
+
 export const updateOrderStatus = async (req, res) => {
   try {
     const { _id } = req.query;
     const { Order_Status,  } = req.body;
 
     const currentOrder = await Order.findById(_id);
-    if (!currentOrder) {
-      return res.send({ message: "Order not found" });
-    }
+   
     const statusHasChanged = currentOrder.Order_Status !== Order_Status;
     const updateFields = { Order_Status };
     if (statusHasChanged) {
@@ -119,30 +114,20 @@ export const updateOrderStatus = async (req, res) => {
 // Delete order
 
 
-export const deleteOrder = async (req, res) => {
+export const cancelOrder = async (req, res) => {
   try {
     const { Order_id } = req.query;
     const orderItems = await Ordermaster.find({ Order_id });
-    const deletedOrder = await Order.findOneAndDelete({ Order_id });
-                         await Ordermaster.deleteMany({ Order_id });
-    
-
-    if (!deletedOrder) {
-      return res.send({ message: "Order not found" });
-    }
-     
+    // const canceledOrder = await Order.findOneAndDelete({ Order_id });
+    //                      await Ordermaster.deleteMany({ Order_id });
+      const canceledOrder = await Ordermaster.updateMany({ Order_id });
+   
     for (const item of orderItems) {
       await Product.findOneAndUpdate(
         { Product_Name: item.Product_Name },
-        { $inc: { Avail_Stock: +item.Quantity } } // Increase stock back based on quantity in the order
-      );
-    }
-
-    res
-      .send({
-        message: "Order deleted successfully",
-        deletedOrder,
-              });
+        { $inc: { Avail_Stock: +item.Quantity } } 
+      );}
+  res.send({message: "Order deleted successfully", canceledOrder });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error deleting order", error });

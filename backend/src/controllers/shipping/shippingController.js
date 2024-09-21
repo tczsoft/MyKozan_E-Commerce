@@ -25,21 +25,14 @@ export const getAllShippings = async (req, res) => {
 
 export const updateShipping = async (req, res) => {
   try {
-    const { id } = req.query;
-    const updatedShipping = await Shiping.findByIdAndUpdate(id, req.body, { new: true });
-
-    if (!updatedShipping) {
-      return res.send({ message: 'Shipping address not found' });
-    }
-
+    const { _id } = req.query;
+    const updatedShipping = await Shiping.findByIdAndUpdate( { _id }, req.body, { new: true });
     res.send({ message: 'Shipping address updated successfully', updatedShipping });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error updating shipping address', error });
   }
 };
-
-
 
 
 
