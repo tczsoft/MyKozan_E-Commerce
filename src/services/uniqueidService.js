@@ -2,7 +2,7 @@ import moment from "moment-timezone"
 import { Order } from "../models/OrderModel.js";
 
 export const uniqueorderid = async () => {
-  var keyname = "SNPI"
+  var keyname = "mykozans"
   var getlastid;
 
   const currentyear = moment(new Date()).format('YYYY')

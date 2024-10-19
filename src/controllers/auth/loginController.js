@@ -6,8 +6,6 @@ import { Admin } from '../../models/AdminModel.js';
 export const Login = async (req, res) => {
   try {
     const { Email, Password } = req.body;
-
-  
     const adminData = await Admin.findOne({ Email,Password, Status: 'Active' });
     if (adminData) {
         const token = Createtoken({ _id: adminData._id, Email: adminData.Email, Role: adminData.Role });

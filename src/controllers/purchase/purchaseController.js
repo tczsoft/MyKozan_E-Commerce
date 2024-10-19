@@ -36,6 +36,8 @@ export const getAllPurchase = async (req,res) => {
         const viewPurchase1 = await PurchaseMaster.find() ;
         res.send({purchase : viewPurchase , purchasemaster : viewPurchase1});
     } catch (error) {
+
+      
         console.log({message:'Error fetching purchase details' , error})
     }
 };

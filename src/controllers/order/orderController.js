@@ -1,77 +1,80 @@
 import moment from "moment-timezone";
 import { Order, Ordermaster } from "../../models/OrderModel.js";
 import { Product  } from "../../models/ProductModel.js";
+import mongoose from "mongoose";
 
 
+export const getAllOrders = async (req, res, next) => {
+  try {
+    const { first, rows, globalfilter, colfilter } = req.query;
 
-export const getAllOrders = async (req, res ) => {
-    try {
-      const { Role, Email } = req.user;
-      const query = Role === 'Customer' ? { Email: Email }:{};
-      const orders = await Order.find(query) ;
-      res.send( orders );
-  } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error fetching orders", error });
-    }
-  };
-
-
-
-// Create a new order
-// export const createOrder = async (req, res) => {
-//   try {
-//     const {order, ordermaster} = req.body;
-//     // Generate a unique Order_id if not provided
-//     const uniqueOrderId = `MYKO_${moment().format('DDMMYY_HHmmss')}`;
-//     // Create the main order
-//     const savedOrder = await new Order(order).save();
-//     // Save each product to the OrderMaster collection
-//     const productOrders = products.map((product) => ({...product, Order_id: uniqueOrderId }));
-//     await Ordermaster.insertMany(productOrders);
-//     // await Ordermaster.insertMany(ordermaster);
-//     res.status(201).json({ order: savedOrder, products: productOrders });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Error creating order", error });
-//   }
-// };
-
-
-
+    const fieldArray = Object.keys(Order.schema.obj);
+    const globalFilter = globalfilter ? { $or: fieldArray.filter((field1) => Order.schema.path(field1) instanceof mongoose.Schema.Types.String).map(field => ({ [field]: { $regex: globalfilter, $options: 'i' } })) } : {};
+    const emailFilter = req.user.Role == 'Customer' ? {...globalFilter, Email: req.user.Email } : globalFilter;
+    const filter = colfilter?{ ...colfilter, ...emailFilter }:emailFilter;
+    const resdata = await Order.find(filter).sort({ createdAt: -1 }).skip(first).limit(rows);
+    const totallength = await Order.countDocuments(filter);
+    res.send({ resdata, totallength });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 
 
 export const createOrder = async (req, res) => {
-    try {
-      const { order, ordermaster} = req.body; // Extract products and order details
-    
-const getFinancialYear = (date) => {
-    const year = moment(date).year();
-    const month = moment(date).month(); 
-    return month >= 3  ? `${year % 100}${(year + 1) % 100}` : `${(year - 1) % 100}${year % 100}`;
-  };
-  const count = await Order.countDocuments();
-  
-      const uniqueOrderId = `MYKO_${moment().format('DDMMYY_HHmmss')}`;
-      const uniqueOrderId2 = `MYKOINV_${getFinancialYear(moment())}_${ count + 1}`;
-      const orderWithId = { ...order, Order_id: uniqueOrderId ,Invoice_ID: uniqueOrderId2 };
-      const savedOrder = await new Order(orderWithId).save();
-      const productOrders = ordermaster.map((product) => ({ ...product, Order_id: uniqueOrderId,  }));
-      await Ordermaster.insertMany(productOrders);
-         
-    for (const product of ordermaster) {
-        await Product.findOneAndUpdate(
-          { Product_Name: product.Product_Name },
-          { $inc: { Avail_Stock: -product.Quantity } } 
-        );
-      }
-      res.send({ order: savedOrder, products: productOrders });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Error creating order", error });
+  try {
+    const { orderdata, ordermasterdata } = req.body;
+    console.log(req.body)
+    const generateUniqueIds = () => {
+      const orderId = `MYKO_${moment().format('DDMMYY_HHmmss')}`;
+      const invoiceId = `INV_${moment().format('YYMMDD')}_${Math.floor(Math.random() * 10000)}`;
+      return { orderId, invoiceId };
+    };
+
+    const { orderId, invoiceId } = generateUniqueIds();
+
+    const newOrder = {
+      ...orderdata,
+      Order_id: orderId,
+      Invoice_ID: invoiceId,
+      Order_Date: moment().tz('Asia/Kolkata').format('YYYY-MM-DD'),
+    };
+
+    const savedOrder = await new Order(newOrder).save();
+
+    // Prepare product order data
+    const productOrders = ordermasterdata.map((product) => ({
+      Order_id: orderId,
+      Username: orderdata.Username,
+      Product_Name: product.Product_Name,
+      Images: product.Images,
+      Sale_Price: product.Sale_Price,
+      Discount: product.Discount,
+      Quantity: product.Quantity,
+    }));
+
+    // Save product order data in Ordermaster
+    await Ordermaster.insertMany(productOrders);
+
+    // Optional: Update product stock
+    for (const product of ordermasterdata) {
+      await Product.findOneAndUpdate(
+        { Product_Name: product.Product_Name },
+        { $inc: { Avail_Stock: -product.Quantity } }
+      );
     }
-  };
+
+    res.status(200).json({
+      message: 'Order and product details saved successfully!',
+      order: savedOrder,
+      products: productOrders,
+    });
+  } catch (error) {
+    console.error('Error while creating order:', error);
+    res.status(500).json({ message: 'Error creating order', error });
+  }
+};
 
 
 export const getOrderById = async (req, res) => {
@@ -90,9 +93,7 @@ export const updateOrderStatus = async (req, res) => {
   try {
     const { _id } = req.query;
     const { Order_Status,  } = req.body;
-
     const currentOrder = await Order.findById(_id);
-   
     const statusHasChanged = currentOrder.Order_Status !== Order_Status;
     const updateFields = { Order_Status };
     if (statusHasChanged) {
@@ -141,3 +142,13 @@ export const cancelOrder = async (req, res) => {
 };
 
 
+export const getfilteroptions= async (req, res, next) => {
+  try {
+    const { field } = req.body;
+    const updatedData = await Order.distinct(field);
+    res.send({[field]:updatedData});
+  } catch (error) {
+    console.error("Error updating record:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

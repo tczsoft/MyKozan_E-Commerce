@@ -4,6 +4,8 @@ import productRoutes from './productRoutes.js'
 import orderRoutes from './orderRoutes.js'
 import shippingRoutes from './shippingRoutes.js'
 import purchaseRouter from './purchaseRoutes.js'
+import cartrouter from './cartRoutes.js'
+import customersRouter from './customerRoutes.js'
 // import productRouter from './productRoutes.js'
 // import customersRouter from './customerRoutes.js'
 // import employeesRouter from './employeeRoutes.js'
@@ -19,13 +21,15 @@ router.use('/products', productRoutes);
 router.use('/orders', orderRoutes);
 router.use('/shipping' , shippingRoutes);
 router.use('/purchase' , purchaseRouter);
+router.use('/cart' , cartrouter);
+
 
 
 // router.use('/category', categoryRouter)
 
 // router.use('/employees', employeesRouter)
 // router.use('/products', productRouter)
-// router.use('/customers', customersRouter)
+router.use('/customers', customersRouter)
 // router.use('/enquiry', EnquiryRouter)
 // router.use('/shipping', shippingRouter)
 

@@ -6,14 +6,14 @@ import router from './routes/index.js'
 import session from 'express-session';
 
 const app = express()
-app.use(express.json())
+app.use(express.json({}))
 app.use(express.urlencoded({ extended: false }))
 app.use(morgan('dev'))
 app.use(compression())
 app.use('/uploads', express.static('uploads'))
 
 app.use(cors({
-  origin: ['http://192.168.0.130:5173','http://192.168.0.25:5173', "http://192.168.0.131:5173", "http://192.168.0.131:5174"],
+  origin: ['http://192.168.0.130:5173','http://192.168.0.25:5173', "http://192.168.0.131:5173", "http://192.168.0.131:5174","http://192.168.0.147:5173"],
   credentials: true
 }))
 
