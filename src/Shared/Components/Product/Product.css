@@ -1,0 +1,8 @@
+.rare{
+    transition: 0.5s;
+}
+
+
+.height{
+    height: calc(100% - 20px);
+}
