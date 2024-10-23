@@ -17,6 +17,7 @@ import ScrollToTop from "./ScrollToTop.jsx";
 import Myorders from "../Components/Your Orders/Myorders.jsx";
 import AdminRouter from "../admin/Router/AdminRouter.jsx";
 import Checkout from "../Shared/Components/Checkout/Checkout.jsx";
+import Profiles from "../Components/Profile/Profiles.jsx";
 
 
 export default function Approuter() {
@@ -46,6 +47,7 @@ export default function Approuter() {
           <Route path="/details" element={<OrderDetails />} />
           <Route path="/checkout" element={<Checkout/>} />
           <Route path="/yourorder" element={<Myorders/>} />
+          <Route path="/profile" element={<Profiles/>} />
 
         </Route>
 

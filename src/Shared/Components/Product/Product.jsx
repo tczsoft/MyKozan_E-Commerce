@@ -46,7 +46,7 @@
 //         }
 //     };
 
-    
+
 
 
 //     const fetchProducts = async () => {
@@ -65,12 +65,12 @@
 //         }
 //     };
 
-   
+
 //     useEffect(() => {
 //         fetchProducts();
 //     }, [first, rows, globalFilter]);
 
-   
+
 //     const handleNextPage = () => {
 //         setFirst(first + rows);  
 //     };
@@ -166,6 +166,7 @@ import { Search, ShoppingCart } from "lucide-react";
 import toast from "react-hot-toast";
 import { getAllProducts } from "../../Services/products/apiProducts";
 import UseCart from "../../Services/Store/UseCart";
+import '../Product/Product.css'
 import useAuth from "../../Services/Store/useAuth";
 import { apisavecart } from "../../Services/Cart/apiCart";
 import apiurl from "../../Services/api/apiendpoint";
@@ -240,11 +241,11 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="mb-8 text-4xl font-bold text-gray-900">Our Products</h1>
-          <div className="relative max-w-xl mx-auto mb-12">
+    <div className="min-h-screen max-w-[75rem] mx-auto px-5">
+      <div className="  lg:py-0 py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div className="flex justify-between ">
+          <h1 className="mb-8 md:text-3xl text-base font-bold text-gray-900 md:mt-0 mt-4 md:block hidden"> Products</h1>
+          <div className="relative mb-12">
             <input
               type="text"
               value={globalFilter}
@@ -260,7 +261,7 @@ const Products = () => {
           {products.map((product) => (
             <div
               key={product._id}
-              className="overflow-hidden transition-all duration-300 bg-white shadow-sm group rounded-xl hover:shadow-xl"
+              className="overflow-hidden transition-all duration-300 bg-white shadow-sm group  border-2 rounded-xl  shade"
             >
               <div className="p-4">
                 <Link to={`/productsdetail/${product._id}`} className="block">
@@ -276,7 +277,7 @@ const Products = () => {
                   </h2>
                   <div className="flex items-baseline justify-between mb-4">
                     <p className="text-2xl font-bold text-green-600">
-                    $ {product.Sale_Price || 'N/A'}
+                      $ {product.Sale_Price || 'N/A'}
                     </p>
                     <span className="text-sm text-gray-500">Min. 50 Pcs</span>
                   </div>
@@ -304,7 +305,7 @@ const Products = () => {
           ))}
         </div>
 
-        <div className="flex justify-center gap-4 mt-12">
+        {/* <div className="flex justify-center gap-4 mt-12">
           <button
             onClick={() => setFirst(Math.max(0, first - rows))}
             disabled={first === 0}
@@ -319,7 +320,7 @@ const Products = () => {
           >
             Next
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

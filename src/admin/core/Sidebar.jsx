@@ -40,8 +40,8 @@ export default function Sidebar() {
         {/* Logo Section */}
         <div className="px-6 py-4 border-b border-gray-200">
           <a className="flex items-center gap-2" href="#" aria-label="Brand">
-            <img src="/images/logo.png" alt="" className="w-auto h-8" />
-            <span className="text-lg font-bold text-gray-800">MyApp</span>
+            <img src="/assets/Images/Header/My_Kozan1.png" alt="" className="" />
+            {/* <span className="text-lg font-bold text-gray-800">MyApp</span> */}
           </a>
         </div>
 
@@ -52,8 +52,9 @@ export default function Sidebar() {
             className={({ isActive }) => (`
               flex items-center gap-x-3 py-2 px-4 rounded-lg text-sm font-medium transition-all
               ${isActive 
-                ? 'bg-purple-100 text-purple-700' 
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                ? 'bg-[#f0dccb] text-[#E38734]'
+
+                : 'text-gray-600 hover:bg-[#f0dccb] hover:text-[#E38734]'
               }
             `)}
           >
@@ -66,8 +67,8 @@ export default function Sidebar() {
             className={({ isActive }) => (`
               flex items-center gap-x-3 py-2 px-4 rounded-lg text-sm font-medium transition-all
               ${isActive 
-                ? 'bg-purple-100 text-purple-700' 
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                ? 'bg-[#f0dccb] text-[#E38734]' 
+                : 'text-gray-600 hover:bg-[#f0dccb] hover:text-[#E38734]'
               }
             `)}
           >
@@ -80,8 +81,8 @@ export default function Sidebar() {
             className={({ isActive }) => (`
               flex items-center gap-x-3 py-2 px-4 rounded-lg text-sm font-medium transition-all
               ${isActive 
-                ? 'bg-purple-100 text-purple-700' 
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                ? 'bg-[#f0dccb] text-[#E38734]' 
+                : 'text-gray-600 hover:bg-[#f0dccb] hover:text-[#E38734]'
               }
             `)}
           >
@@ -94,8 +95,8 @@ export default function Sidebar() {
             className={({ isActive }) => (`
               flex items-center gap-x-3 py-2 px-4 rounded-lg text-sm font-medium transition-all
               ${isActive 
-                ? 'bg-purple-100 text-purple-700' 
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-800'
+                ? 'bg-[#f0dccb] text-[#E38734]' 
+                : 'text-gray-600 hover:bg-[#f0dccb] hover:text-[#E38734]'
               }
             `)}
           >

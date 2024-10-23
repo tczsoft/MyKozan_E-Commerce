@@ -148,6 +148,17 @@ export default function Header() {
               <Link to="/" className={`block ${isActive('/') ? 'text-[#e38734]' : 'hover:text-[#E38734] cursor-pointer'}`} onClick={toggleMenu}>
                 Home
               </Link>
+              {isLoggedIn && ( 
+                
+                <Link
+                  to='/profile'
+                  className={`block ${isActive('/profile') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`}
+                  onClick={toggleMenu}
+                >
+                 My Profile
+                </Link>
+             
+            )}
               <Link to="/product" className={`block ${isActive('/product') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`} onClick={toggleMenu}>
                 Products
               </Link>

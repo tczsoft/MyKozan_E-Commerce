@@ -4,30 +4,30 @@ import { Editor } from 'primereact/editor';
 
 
 export default function Addandeditform(props) {
-    const { visible, setVisible, handlesave, handlechange, loading, formdata, handleupdate ,filteredSubcategories,selectedCategory,handleCategoryChange,categories,imageDataUrl} = props;
-  
+    const { visible, setVisible, handlesave, handlechange, loading, formdata, handleupdate, filteredSubcategories, selectedCategory, handleCategoryChange, categories, imageDataUrl } = props;
+
     return (
         <Dialog header="Product Details" visible={visible} onHide={() => setVisible(false)} className="!w-full lg:!w-[40rem]">
             <form onSubmit={!formdata?._id ? handlesave : handleupdate}>
-                   <div className="mb-3">
+                <div className="mb-3">
                     <div className="flex items-center justify-center mb-3">
-                    <label className="flex flex-col items-center justify-center w-[80%] h-55 sm:w-[40%] overflow-hidden sm:h-60 rounded-full border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                        <label className="flex flex-col items-center justify-center w-[80%] h-55 sm:w-[40%] overflow-hidden sm:h-60 rounded-full border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             {
                                 formdata?.Images ?
-                                <img src={imageDataUrl?imageDataUrl:`${apiurl()}/${formdata?.Images[0]}`}  className='rounded-xl w-[150px] object-cover' />:
-                                <div className="flex flex-col items-center justify-center pt-4 pb-5">
-                                    <i className="fi fi-sr-mode-landscape"></i>
-                                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
-                                </div>
-                                
+                                    <img src={imageDataUrl ? imageDataUrl : `${apiurl()}/${formdata?.Images[0]}`} className='rounded-xl w-[150px] object-cover' /> :
+                                    <div className="flex flex-col items-center justify-center pt-4 pb-5">
+                                        <i className="fi fi-sr-mode-landscape"></i>
+                                        <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span></p>
+                                    </div>
+
                             }
 
                             <input type="file" name="Images" multiple onChange={handlechange} className="hidden" />
                         </label>
                     </div>
                 </div>
-               {/* Form Fields Section */}
-               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                {/* Form Fields Section */}
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {/* Product Name */}
                     <div className="flex flex-col">
                         <label className="mb-2 text-sm font-semibold text-gray-800">Product Name</label>
@@ -66,7 +66,7 @@ export default function Addandeditform(props) {
                         />
                     </div>
 
-   
+
                     {/* <div className="flex flex-col">
                         <label className="mb-2 text-sm font-semibold text-gray-800">Net Weight</label>
                         <input
@@ -181,7 +181,7 @@ export default function Addandeditform(props) {
                     </div>
 
                     {/* Product Description */}
-                    <div className="flex flex-col lg:col-span-2">
+                    <div className="flex flex-col lg:col-span-2" >
                         <label className="mb-2 text-sm font-semibold text-gray-800">Product Description</label>
                         <Editor
                             style={{ height: '200px' }}

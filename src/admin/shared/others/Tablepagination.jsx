@@ -26,8 +26,8 @@ export default function Tablepagination(props) {
     const rowOptions = [10, 20, 50, 100];
     return (
         <div className="flex items-center justify-between w-full p-2 px-8">
-   
-            <div>
+
+            {/* <div>
                 <label htmlFor="rows-per-page" className="mr-2">Rows per page:</label>
                 <select
                     id="rows-per-page"
@@ -54,9 +54,9 @@ export default function Tablepagination(props) {
                     total={pages}
                     onChange={(page) => onPage(page)}
                 />
-            )}
+            )} */}
 
-    
+
             <div>Total Records: {totalRecords}</div>
         </div>
     );
