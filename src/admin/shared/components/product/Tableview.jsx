@@ -44,7 +44,7 @@ const Tableview = (props) => {
           slidesPerView={1}
           // navigation
           // pagination={{ clickable: false }}
-          autoplay={{ delay: 3000 }}
+          autoplay={{ delay: 2000 }}
           className="w-full h-full"
         >
           {rowData['Images'].map((img, index) => (
