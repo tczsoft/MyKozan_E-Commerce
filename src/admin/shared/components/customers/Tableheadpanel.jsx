@@ -1,7 +1,7 @@
 export default function Tableheadpanel(props){
   const {setglobalfilter}=props;
     return(
-        <div className="px-6 py-4 flex justify-between items-center">
+        <div className="px-6 py-4 flex flex-wrap gap-4  justify-between items-center">
             <div>
               <h2 className="text-xl font-semibold text-gray-800 ">
                 Customers
@@ -17,3 +17,6 @@ export default function Tableheadpanel(props){
           </div>
     )
 }
+
+
+

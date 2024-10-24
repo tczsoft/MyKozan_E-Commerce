@@ -27,11 +27,11 @@ function Login() {
         const role = response.role;
         if (role === 'admin') {
           navigate("/admin");
-        } 
-        else if (role === 'customer'){
+        }
+        else if (role === 'customer') {
           navigate("/");
         }
-       
+
       } else {
         toast.error('Invalid email or password');
       }
@@ -49,7 +49,7 @@ function Login() {
         <form className="p-6" onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div>
-              <p className="font-bold text-gray-600 lg:text-lg text-md">Enter Email / Mobile Number</p>
+              <p className="font-bold text-black lg:text-lg text-md">Enter Email / Mobile Number</p>
               <input
                 type="text"
                 required
@@ -60,7 +60,7 @@ function Login() {
               />
             </div>
             <div>
-              <p className="font-bold text-gray-600 lg:text-lg text-md">Password</p>
+              <p className="font-bold text-blacklg:text-lg text-md">Password</p>
               <div className="flex">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -78,13 +78,7 @@ function Login() {
                 Forgot Password?
               </Link>
             </div>
-            <p className="text-gray-500 lg:text-base text-md">
-              By continuing, you agree to{" "}
-              <span className="text-[#00712D]">My Kozan LLC</span> terms of Use and
-              <Link to="/privacy">
-                <span className="text-[#00712D] hover:underline"> Privacy Policy</span>
-              </Link>
-            </p>
+
             <div className="mt-10 text-center">
               <button
                 type="submit"
@@ -104,6 +98,14 @@ function Login() {
                 </span>
               </Link>
             </div>
+
+            <p className="text-gray-500 lg:text-base text-md text-center">
+              By continuing, you agree to{" "}
+              <span className="text-[#00712D]">My Kozan LLC</span> terms of Use and
+              <Link to="/privacy">
+                <span className="text-[#00712D] hover:underline"> Privacy Policy</span>
+              </Link>
+            </p>
           </div>
         </form>
       </div>

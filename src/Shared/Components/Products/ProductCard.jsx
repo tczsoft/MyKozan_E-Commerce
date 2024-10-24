@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { getProductbyId } from '../../Services/products/apiProducts';
@@ -10,9 +10,22 @@ import '../Products/Pro.css'
 import ReactImageMagnify from 'react-image-magnify';
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
+import { BiArrowToTop } from "react-icons/bi";
+import { BiArrowFromTop } from "react-icons/bi";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+
 
 function ProductCard() {
+
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [open, setOpen] = React.useState(false);
   const { id } = useParams();
+
+
+  const thumbnailRef = useRef(null);
+
   const [currentProductImage, setCurrentProductImage] = useState(0);
   const [productDetails, setProductDetails] = useState(null);
   const [cart, setCart] = useState([]);
@@ -76,6 +89,45 @@ function ProductCard() {
     return <div>No product details available.</div>;
   }
 
+  const scrollToThumbnail = (index) => {
+    setCurrentProductImage(index);
+    if (thumbnailRef.current) {
+      const thumbnails = thumbnailRef.current.querySelectorAll('.thumbnail');
+      if (thumbnails[index]) {
+        // Smoothly scroll to the active thumbnail
+        thumbnails[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  };
+
+  const scrollUp = () => {
+    if (thumbnailRef.current) {
+      thumbnailRef.current.scrollBy({ top: -65, behavior: 'smooth' }); // Adjust scroll amount if needed
+    }
+  };
+
+  const scrollDown = () => {
+    if (thumbnailRef.current) {
+      thumbnailRef.current.scrollBy({ top: 65, behavior: 'smooth' }); // Adjust scroll amount if needed
+    }
+  };
+
+
+  const slides = productDetails.Images.map((image) => ({
+    src: `${apiurl()}/${image}`,
+  }));
+
+
+
+
+
+
+
+
+
+
+
+
   const handleBuyNow = (product) => {
     if (!isLoggedIn) {
       toast.error("Please log in to Buy items!");
@@ -89,24 +141,48 @@ function ProductCard() {
     <section className='mx-auto max-w-[70rem] px-5 my-10 lg:mt-0 mt-32'>
       {productDetails &&
         <div className="grid grid-cols-5 gap-4 lg:grid-cols-10 lg:gap-10">
-          <div className='flex flex-col col-span-1 gap-3'>
-            {productDetails.Images && productDetails.Images.length > 0 ? (
-              productDetails.Images.map((image, imgIndex) => (
-                <img
-                  key={imgIndex}
-                  className='w-full cursor-pointer hover:scale-105 duration-200 hover:border h-[65px] hover:border-black'
-                  src={`${apiurl()}/${image}`}
-                  alt={`product-${image + 1}`}
-                  onClick={() => setCurrentProductImage(imgIndex)}
-                />
-              ))
-            ) : (
-              <p>No Images Available</p>
-            )}
+          <div className='px-2'>
+
+            <button
+              onClick={scrollUp}
+              className='relative   left-1/2  transform -translate-x-1/2 z-10  px-3 py-1  '
+            >
+              <img src="/assets/Images/Header/Up Squared.png" className='w-8' alt="" />
+            </button>
+
+            <div
+              className='flex flex-col gap-3 overflow-hidden md:h-[330px] h-[230px] relative'
+              ref={thumbnailRef}
+            >
+              {productDetails.Images && productDetails.Images.length > 0 ? (
+                productDetails.Images.map((image, imgIndex) => (
+                  <img
+                    key={imgIndex}
+                    className={`w-full h-[65px] cursor-pointer hover:scale-105 duration-200 
+                    ${currentProductImage === imgIndex ? 'border-2 border-black' : 'border-transparent'} 
+                    thumbnail`}
+                    src={`${apiurl()}/${image}`}
+                    alt={`product-${image + 1}`}
+                    onClick={() => scrollToThumbnail(imgIndex)}
+                  />
+                ))
+              ) : (
+                <p>No Images Available</p>
+              )}
+            </div>
+
+
+
+            <button
+              onClick={scrollDown}
+              className='relative left-1/2 transform -translate-x-1/2 z-10 px-3 py-1 '
+            >
+              <img src="/assets/Images/Header/Drop Down.png" className='w-8' alt="" />
+            </button>
           </div>
           <div className='col-span-4 '>
             {/* <div
-              className='relative overflow-hidden w-full lg:h-[420px] md:h-[560px] z-30 h-[320px]'
+              className='relative overflow-hidden w-full lg:h-[420px] md:h-[560px] z-30 h-[320px] lg:hidden block'
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
               style={{
@@ -116,42 +192,85 @@ function ProductCard() {
                 backgroundRepeat: 'no-repeat',
 
               }}
-            > */}
-
-            <div className="relative flex justify-center">
+            >
+            </div> */}
+            {/* <div className=" flex justify-center lg:block hidden">
               <ReactImageMagnify
                 {...{
                   smallImage: {
                     alt: 'Product Image',
                     isFluidWidth: true,
                     src: `${apiurl()}/${productDetails.Images[currentProductImage]}`,
-                    width: 1200,
-                    height: 900,
                   },
                   largeImage: {
                     src: `${apiurl()}/${productDetails.Images[currentProductImage]}`,
-                    width: 1200,
-                    height: 900,
+                    width: 1600, // Adjusted width
+                    height: 1200, // Adjusted height
                   },
                   enlargedImagePosition: 'beside',
                   enlargedImageContainerDimensions: {
-                    width: '150%',
-                    height: '150%',
+                    width: '120%', // Reduced size
+                    height: '120%',
                   },
-
-                  shouldUsePositiveSpaceLens: true
+                  enlargedImageContainerStyle: {
+                    zIndex: 9999, // Set high z-index to avoid overlap with other elements
+                  },
+                  shouldUsePositiveSpaceLens: true,
                 }}
               />
-            </div>
+            </div> */}
 
 
 
-            {/* <img
-                className='w-full cursor-zoom-in -z-30'
-                src={`${apiurl()}/${productDetails.Images[currentProductImage]}`}
-                alt='product-thumbnail'
-              
-              />  */}
+            <img
+              className='w-full cursor-zoom-in -z-30 block'
+              src={`${apiurl()}/${productDetails.Images[currentProductImage]}`}
+              alt='product-thumbnail'
+
+            />
+
+
+
+            <button type="button" onClick={() => setOpen(true)}>
+              Open Lightbox
+            </button>
+
+            {/* <Lightbox
+              open={open}
+              close={() => setOpen(false)}
+              slides={[
+                { src: "/image1.jpg" },
+                { src: "/image2.jpg" },
+                { src: "/image3.jpg" },
+              ]}
+            />
+ */}
+
+
+            <Lightbox
+              open={open}
+              close={() => setOpen(false)}
+              slides={slides}
+              slideIndex={currentImageIndex} // Optionally, to start at the clicked image
+              renderThumbnail={(index, { src }) => (
+                <img
+                  key={index}
+                  className="w-24 h-24 cursor-pointer object-cover border-2 border-transparent hover:border-black"
+                  src={src}
+                  onClick={() => {
+                    setCurrentImageIndex(index);
+                    setOpen(true);
+                  }}
+                  alt={`thumbnail-${index}`}
+                />
+              )}
+              thumbnailContainerStyle={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '10px', // Adjust spacing between thumbnails
+                justifyContent: 'center', // Center the thumbnails
+              }}
+            />
 
 
 
@@ -164,9 +283,9 @@ function ProductCard() {
               </p>
               <p className="text-base text-[#E38734]"> <span className='text-xl font-bold'>  $ {productDetails.Sale_Price} </span> (min 50 pcs)</p>
               <div className='flex gap-3 mt-4'>
-                  <button   onClick={() => handleBuyNow(productDetails)}  className='border py-2 px-3 rounded-lg hover:scale-105 duration-200 text-white bg-[#00712D]'>
-                    Buy Now
-                  </button>
+                <button onClick={() => handleBuyNow(productDetails)} className='border py-2 px-3 rounded-lg hover:scale-105 duration-200 text-white bg-[#00712D]'>
+                  Buy Now
+                </button>
                 <button
                   className='border py-2 lg:px-4 px-2 rounded-lg flex gap-1 text-white hover:scale-105 duration-200 bg-[#E38734]  '
                   onClick={() => handleAddToCart(productDetails)}

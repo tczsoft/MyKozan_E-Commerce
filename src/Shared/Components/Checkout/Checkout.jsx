@@ -85,47 +85,47 @@
 
 
 
-    // const handleEditAddress = (address) => {
-    //     setFormdata(address);
-    //     setIsEditMode(true);
-    //     setShowNewAddressModal(true);
-    // };
+// const handleEditAddress = (address) => {
+//     setFormdata(address);
+//     setIsEditMode(true);
+//     setShowNewAddressModal(true);
+// };
 
-    // const handleDeleteAddress = (_id) => {
-    //     deleteShipping(_id)
-    //         .then(() => {
-    //             toast.success("Address deleted successfully");
-    //             return getShippingdata();
-    //         })
-    //         .catch(() => {
-    //             toast.error("Error deleting address");
-    //         });
-    // };
+// const handleDeleteAddress = (_id) => {
+//     deleteShipping(_id)
+//         .then(() => {
+//             toast.success("Address deleted successfully");
+//             return getShippingdata();
+//         })
+//         .catch(() => {
+//             toast.error("Error deleting address");
+//         });
+// };
 
 
-    // const handleAddressChange = (e) => {
-    //     setFormdata({
-    //         ...formdata,
-    //         [e.target.name]: e.target.value,
-    //     });
-    // };
+// const handleAddressChange = (e) => {
+//     setFormdata({
+//         ...formdata,
+//         [e.target.name]: e.target.value,
+//     });
+// };
 
-    // const handlesave = async (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     const action = isEditMode ? updateShipping : saveShipping;
-    //     const successMessage = isEditMode ? "Address updated successfully" : "Address saved successfully"
-    //     try {
-    //         await action(formdata);
-    //         toast.success(successMessage);
-    //         await getShippingdata();
-    //     } catch (error) {
-    //         toast.error("Error saving address");
-    //     } finally {
-    //         setShowNewAddressModal(false);
-    //         setLoading(false);
-    //     }
-    // };
+// const handlesave = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     const action = isEditMode ? updateShipping : saveShipping;
+//     const successMessage = isEditMode ? "Address updated successfully" : "Address saved successfully"
+//     try {
+//         await action(formdata);
+//         toast.success(successMessage);
+//         await getShippingdata();
+//     } catch (error) {
+//         toast.error("Error saving address");
+//     } finally {
+//         setShowNewAddressModal(false);
+//         setLoading(false);
+//     }
+// };
 
 
 // //     return (
@@ -361,7 +361,7 @@ const Checkout = () => {
         if (location.state?.product) {
             const product = location.state.product;
             setCartItems([{ productId: product, Quantity: 50 }]);
-            setSubtotal(product.Sale_Price * 50); 
+            setSubtotal(product.Sale_Price * 50);
         } else if (storedCartItems) {
             setCartItems(JSON.parse(storedCartItems));
             if (storedSubtotal) setSubtotal(parseFloat(storedSubtotal));
@@ -437,7 +437,7 @@ const Checkout = () => {
         }
     };
 
-    
+
     const handleEditAddress = (address) => {
         setFormdata(address);
         setIsEditMode(true);
@@ -456,7 +456,7 @@ const Checkout = () => {
     };
 
 
-    
+
 
 
     return (
@@ -467,7 +467,7 @@ const Checkout = () => {
                         <h1 className="text-3xl font-bold text-gray-900">Checkout</h1>
                     </div>
 
-                    <div className="grid grid-cols-2 overflow-hidden bg-white rounded-lg shadow-xl">
+                    <div className="grid md:grid-cols-2 grid-cols-1 overflow-hidden bg-white rounded-lg shadow-xl">
                         <div className="p-1 md:p-6">
                             <div></div>
                             <div className="flex items-center justify-between mb-6">

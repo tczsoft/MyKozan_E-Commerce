@@ -10,7 +10,7 @@ import { useState } from "react";
 import useAuth from "../../shared/services/store/useAuth";
 
 export default function Sidebar() {
-  const [isSidebarOpen, setSidebarOpen] = useState(true); 
+  const [isSidebarOpen, setSidebarOpen] = useState(false); 
   const { userdetails, logout } = useAuth()
   return (
     <>

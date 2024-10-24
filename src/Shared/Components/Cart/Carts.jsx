@@ -91,6 +91,8 @@ function Cart() {
         } catch (error) {
             console.error("Error removing item from cart:", error);
         }
+
+
     };
 
 
@@ -148,7 +150,7 @@ function Cart() {
     }
 
     return (
-        <section className="my-10 max-w-[70rem] mx-auto md:my-32 px-5 md:mt-32 mt-32">
+        <section className="my-10 max-w-[70rem] mx-auto md:my-32 lg:h-screen px-5 md:mt-32 mt-32">
             <div className="flex items-center justify-between">
 
 
@@ -171,8 +173,11 @@ function Cart() {
                     {cart.map((item) => (
                         <div className="grid grid-cols-1 max-w-[40rem]  ">
                             <div key={item._id} className="flex flex-wrap items-center justify-between gap-4 p-5 md:gap-0 ">
-                                <div className="flex flex-wrap items-center justify-center w-full gap-4 md:justify-start ">
-                                    <div className="flex-shrink-0 w-32 h-32">
+
+
+                                <div className="grid md:grid-cols-5 grid-cols-1 mx-auto gap-4">
+
+                                    <div className="flex-shrink-0 w-32 h-32 col-span-2  mx-auto">
                                         <img
 
                                             src={`${apiurl()}/${item?.productId?.Images?.[0]}`}
@@ -180,34 +185,49 @@ function Cart() {
                                             className="object-cover w-full h-full rounded"
                                         />
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <h2 className="text-xl ">
-                                            {item?.productId?.Product_Name || "Unknown Product"}
-                                        </h2>
-                                        {/* <p className="text-gray-600">
-                                    Price: ${item?.productId?.Sale_Price?.toFixed(2) || "0.00"}
-                                </p> */}
-                                        <p className="text-[#E38734] text-lg">
-                                            ${Number(item?.productId?.Sale_Price).toFixed(2) || "0.00"} <span className="text-sm"> (min 50 pcs)</span>
-                                        </p>
-                                        <div className="flex items-center gap-1">
-                                            <p className="">Quantity : </p>
-                                            <select
-                                                value={item.Quantity}
-                                                onChange={(e) => handleQuantityChange(item?.productId?._id, e)}
-                                                className="px-2 py-1 bg-white border rounded"
-                                            >
-                                                {quantityOptions.map((option) => (
 
-                                                    <option key={option.value} value={option.value}>
-                                                        {option.label}
-                                                    </option>
-                                                ))}
-                                            </select>
+                                    <div className="col-span-3 flex gap-10 items-center">
+
+                                        <div className="flex flex-col gap-2">
+                                            <h2 className="text-xl ">
+                                                {item?.productId?.Product_Name || "Unknown Product"}
+                                            </h2>
+                                            {/* <p className="text-gray-600">
+                                          Price: ${item?.productId?.Sale_Price?.toFixed(2) || "0.00"}
+                                         </p> */}
+                                            <p className="text-[#E38734] text-lg">
+                                                ${Number(item?.productId?.Sale_Price).toFixed(2) || "0.00"} <span className="text-sm"> (min 50 pcs)</span>
+                                            </p>
+                                            <div className="flex items-center gap-1">
+                                                <p className="">Quantity : </p>
+                                                <select
+                                                    value={item.Quantity}
+                                                    onChange={(e) => handleQuantityChange(item?.productId?._id, e)}
+                                                    className="px-2 py-1 bg-white  border-1 rounded"
+                                                >
+                                                    {quantityOptions.map((option) => (
+
+                                                        <option key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <button onClick={() => handleRemoveItem(item._id)}>
+                                                <img className="w-7 hover:scale-105" src="/assets/Images/Header/Remove.png" alt="" />
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
 
+
+
+
+                                <div className="w-full border bg-slate-100 mt-5 ">
+                                </div>
                             </div>
 
 
@@ -251,7 +271,7 @@ function Cart() {
             </div>
 
 
-        </section>
+        </section >
     );
 }
 

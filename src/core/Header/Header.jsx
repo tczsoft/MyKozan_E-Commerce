@@ -10,7 +10,7 @@ export default function Header() {
   const [isOpen, setOpen] = useState(false);
   const [isSearchActive, setSearchActive] = useState(false);
   const { cart } = useCartStore();
-  const { isLoggedIn, logout, userdetails } = useAuth(); 
+  const { isLoggedIn, logout, userdetails } = useAuth();
   const location = useLocation();
 
   const toggleMenu = () => {
@@ -78,7 +78,7 @@ export default function Header() {
                 {isLoggedIn ? (
                   <RiLogoutCircleRLine className="text-2xl text-[#E38734]" title="Logout" />
                 ) : (
-                  <> 
+                  <>
                     <img className="cursor-pointer h-7 opacity-85" src="/assets/Images/Header/Login.png" alt="login" />
                     <div className="absolute top-14 ">
                       <ProductLists />
@@ -104,7 +104,7 @@ export default function Header() {
 
           <div className="relative flex items-center">
             <div className="cursor-pointer">
-              <img src="/assets/Images/Header/Search (1).png" alt="search" className="w-7 h-7" />
+              <img src="/assets/Images/Header/Search (1).png" alt="search" className="w-7 h-7"  />
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@ export default function Header() {
               <Link to="/cart" className={`block ${isActive('/cart') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`} onClick={toggleMenu}>
                 Cart
               </Link>
-              
+
               <Link to={isLoggedIn ? '/' : '/login'} onClick={isLoggedIn ? logout : toggleMenu} className={`block ${isActive('/login') ? ' text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'} `}>
                 {isLoggedIn ? 'Logout' : 'Login'}
               </Link>

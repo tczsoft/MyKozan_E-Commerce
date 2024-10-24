@@ -6,22 +6,22 @@ import useAuth from '../../services/store/useAuth';
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false);
-    const [profileData, setProfileData] = useState({First_Name: '',Last_Name: '',Email: '',Mobile_Number: ''});
+    const [profileData, setProfileData] = useState({ First_Name: '', Last_Name: '', Email: '', Mobile_Number: '' });
     const [updatedUserData, setUpdatedUserData] = useState({});
-    const { userdetails } = useAuth(); 
+    const { userdetails } = useAuth();
     const userEmail = userdetails()?.Email;
 
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                if (userEmail) {  
-                    const params = { email: userEmail }; 
-                    const response = await getallcustomers(params); 
+                if (userEmail) {
+                    const params = { email: userEmail };
+                    const response = await getallcustomers(params);
                     if (response.resdata.length > 0) {
-                        const customer = response.resdata[0]; 
+                        const customer = response.resdata[0];
                         const nameParts = customer.First_Name.split(' ');
-                        setProfileData({ First_Name: nameParts[0], Last_Name: customer.Last_Name || '',Email: customer.Email,Mobile_Number: customer.Mobile_Number || '' });
+                        setProfileData({ First_Name: nameParts[0], Last_Name: customer.Last_Name || '', Email: customer.Email, Mobile_Number: customer.Mobile_Number || '' });
                     } else {
                         toast.error("Profile not found.");
                     }
@@ -53,13 +53,13 @@ function Profile() {
     const handleUpdateProfile = async () => {
         try {
             const params = {
-                Email: profileData.Email, 
+                Email: profileData.Email,
                 First_Name: profileData.First_Name,
                 Last_Name: profileData.Last_Name,
-                Mobile_Number: profileData.Mobile_Number 
+                Mobile_Number: profileData.Mobile_Number
             };
-    
-            const res = await updateCustomers(params); 
+
+            const res = await updateCustomers(params);
             if (res && res.message === 'Customer updated successfully') {
                 toast.success('Profile updated successfully!');
             } else {
@@ -71,12 +71,12 @@ function Profile() {
             toast.error('Error occurred while updating profile');
         }
     };
-    
+
     return (
         <>
             <section className='max-w-[70rem] px-5 mx-auto lg:mt-0 md:mt-36 mt-28'>
                 <div className='my-10'>
-                    <div className='max-w-[50rem] mx-auto border border-[#00712d] rounded-2xl'>
+                    <div className='lg:max-w-[50rem]  mx-auto border border-[#00712d] rounded-2xl'>
                         <div className='p-3 space-y-3 text-center'>
                             <div className='w-20 h-20 rounded-full bg-[#e38734] mx-auto flex justify-center items-center'>
                                 {profileData.First_Name[0]?.toUpperCase()}{profileData.Last_Name[0]?.toUpperCase()}
@@ -120,7 +120,7 @@ function Profile() {
                                             type="text"
                                             name="Email"
                                             value={profileData.Email}
-                                            disabled 
+                                            disabled
                                         />
                                     </div>
                                     <div className='flex flex-col mx-auto w-fit'>

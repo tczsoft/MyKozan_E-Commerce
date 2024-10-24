@@ -28,7 +28,7 @@ function HeroSection() {
                             <span className="md:text-3xl  font-bold">High Profit Products !</span>
                             <div className=' lg:mt-0  mt-4'>
                                 <Link to='/product' onClick={toggleMenu}>
-                                    <button className='bg-black text-white font-semibold lg:px-4 lg:py-3 p-2 lg:text-base text-sm rounded-lg lg:mt-10 hover:scale-105 duration-200'>
+                                    <button className='bg-black cursor-pointer text-white font-semibold lg:px-4 lg:py-3 p-2 lg:text-base text-sm rounded-lg lg:mt-10 hover:scale-105 duration-200'>
                                         Shop Now
                                     </button>
                                 </Link>
