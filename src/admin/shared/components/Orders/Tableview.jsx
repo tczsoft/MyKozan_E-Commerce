@@ -12,7 +12,7 @@ import apiurl from '../../services/apiendpoint/apiendpoint';
 
 
 const Tableview = (props) =>{
-  const {tabledata,editfrom,handledelete, viewProducts,cusfilter,filtervalues,onPage,page,downloadPDF}=props
+  const {tabledata,editfrom,handledelete, viewProducts,cusfilter,filtervalues,onPage,page,downloadPDF,downloadingpdf}=props
 
   const [tempFilterValues, setTempFilterValues] = useState(filtervalues);
   const [filterOptions,setFilterOptions] = useState([]);
@@ -30,9 +30,17 @@ const Tableview = (props) =>{
         <button onClick={()=>viewProducts(rowData?.Order_id)} className="inline-flex items-center text-xl font-medium text-blue-600 gap-x-1 decoration-2 " >
           <i className="fi fi-rr-eye"></i>
         </button>
-        <button onClick={()=>{downloadPDF(rowData.Order_id)}} className="inline-flex items-center text-xl font-medium text-red-600 gap-x-1 decoration-2 " >
+        <button title="Download PDF"
+        onClick={() => downloadPDF(rowData.Order_id)} 
+        className="inline-flex items-center text-xl font-medium text-red-600 gap-x-1 decoration-2"
+        disabled={downloadingpdf[rowData.Order_id]}
+      >
+        {downloadingpdf[rowData.Order_id] ? (
+          <i className="fas fa-spinner fa-spin"></i>
+        ) : (
           <i className="text-red-500 fi fi-rr-file-pdf"></i>
-        </button>
+        )}
+      </button>
       </div>
     )
   }
@@ -81,7 +89,7 @@ const Tableview = (props) =>{
     {field: 'Invoice_ID', header: 'Invoice ID',filter: true},
     {field: 'Billing_Name', header: 'Billing Name',width:"150px"},
     {field: 'Email', header: 'Email',width:"150px"},
-    {field: 'Mobilenumber', header: 'Mobile Number',width:"150px"},
+    {field: 'Mobile_Number', header: 'Mobile Number',width:"150px"},
     {field: 'City', header: 'City', filter: true,width:"150px"},
     {field: 'Delivery_Address', header: 'Delivery Address',width:"200px"},
     {field: 'Total_Amount', header: 'Total Amount',width:"150px"},

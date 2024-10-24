@@ -13,15 +13,19 @@ function Sign() {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
+    First_Name: '',
+    Last_Name: '',
     email: '',
     password: '',
-    name: '',
     confirmPassword: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
+    Mobile_Number: '',
+    Address: '',
+    City: '',
+    State: '',
+    Country: '',
+    Zipcode: '',
   });
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -44,14 +48,14 @@ function Sign() {
       const response = await apisendotp({
         Email: data.email,
         Password: data.password,
-        First_Name: data.name,
-        Address: data.address,
-        Country: data.country,
-        State: data.state,
-        City: data.city,
-        Zipcode: data.zipcode,
-
-
+        First_Name: data.First_Name,
+        Last_Name: data.Last_Name,
+        Mobile_Number: data.Mobile_Number,
+        Address: data.Address,
+        Country: data.Country,
+        State: data.State,
+        City: data.City,
+        Zipcode: data.Zipcode,
       });
 
       if (response.status === 'OTP Sent') {
@@ -95,180 +99,218 @@ function Sign() {
   };
 
   return (
-    <section className='md:mt-0 mt-36 my-20 px-2 flex justify-center items-center'>
-      <div className='lg:max-w-[30rem] mx-auto  border'>
-        <div className='flex justify-center items-center gap-2 bg-[#00712D]'>
-          <h1 className='text-white lg:text-xl text-lg text-center py-4 font-bold'>SignUp</h1>
-        </div>
-        <div className='p-6'>
-          {!otpStage ? (
-            <div className='space-y-6'>
+    <section className="flex items-center justify-center min-h-screen px-6 py-12 bg-gray-100">
+      <div className="w-full max-w-2xl p-8 bg-white rounded-lg shadow-xl">
+        <h1 className="mb-6 text-3xl font-bold text-center text-gray-800">
+          {otpStage ? 'Verify Your OTP' : 'Sign Up for an Account'}
+        </h1>
+        <p className="mb-8 text-center text-gray-500">
+          {otpStage
+            ? 'Enter the OTP sent to your email to complete the registration.'
+            : 'Create an account by filling in the details below.'}
+        </p>
+
+        {!otpStage ? (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>Name</p>
+                <label className="block text-sm font-bold text-gray-700">First Name</label>
                 <input
-                  type='text'
-                  required
-                  className='border-b-2 focus:border-b-orange-300 w-full border-gray-200 outline-none'
-                  name='name'
-                  value={data.name}
+                  type="text"
+                  name="First_Name"
+                  value={data.First_Name}
                   onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                 />
               </div>
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>Email</p>
+                <label className="block text-sm font-bold text-gray-700">Last Name</label>
                 <input
-                  type='email'
+                  type="text"
+                  name="Last_Name"
+                  value={data.Last_Name}
+                  onChange={handleOnChange}
                   required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  name='email'
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div>
+                <label className="block text-sm font-bold text-gray-700">Email Address</label>
+                <input
+                  type="email"
+                  name="email"
                   value={data.email}
                   onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                 />
               </div>
+
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>Country</p>
+                <label className="block text-sm font-bold text-gray-700">Mobile Number</label>
                 <input
-                  type='text'
-                  required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  name='country'
-                  value={data.country}
-
+                  type="text"
+                  name="Mobile_Number"
+                  value={data.Mobile_Number}
                   onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                 />
               </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>State</p>
+                <label className="block text-sm font-bold text-gray-700">Country</label>
                 <input
-                  type='text'
-                  required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  name='state'
-                  value={data.state}
-
+                  type="text"
+                  name="Country"
+                  value={data.Country}
                   onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                 />
               </div>
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>Address</p>
-                <textarea
-                  type='text'
-                  required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  name='address'
-                  value={data.address}
-                  rows={6}
-                  onChange={handleOnChange}
-                />
-              </div>
-
-
-              <div>
-                <p className='lg:text-lg text-md text-gray-400'>city</p>
+                <label className="block text-sm font-bold text-gray-700">State</label>
                 <input
-                  type='text'
-                  required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  name='city'
-                  value={data.city}
-
+                  type="text"
+                  name="State"
+                  value={data.State}
                   onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                 />
               </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>ZipCode</p>
+                <label className="block text-sm font-bold text-gray-700">City</label>
                 <input
-                  type='text'
-                  required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  name='zipcode'
-                  value={data.zipcode}
-
+                  type="text"
+                  name="City"
+                  value={data.City}
                   onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                 />
               </div>
 
-
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>Password</p>
-                <div className='flex'>
+                <label className="block text-sm font-bold text-gray-700">Zip Code</label>
+                <input
+                  type="text"
+                  name="Zipcode"
+                  value={data.Zipcode}
+                  onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-700">Address</label>
+              <textarea
+                name="Address"
+                value={data.Address}
+                onChange={handleOnChange}
+                rows={3}
+                required
+                className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
+              ></textarea>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div>
+                <label className="block text-sm font-bold text-gray-700">Password</label>
+                <div className="relative">
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    required
-                    className='border-b-2 w-full border-gray-200 outline-none'
-                    name='password'
+                    name="password"
                     value={data.password}
                     onChange={handleOnChange}
+                    required
+                    className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                   />
-                  <div className='cursor-pointer' onClick={() => setShowPassword((preve) => !preve)}>
-                    <span className='text-xl'>{showPassword ? <IoMdEyeOff /> : <IoEye />} </span>
-                  </div>
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 text-gray-600 right-3"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <IoMdEyeOff /> : <IoEye />}
+                  </button>
                 </div>
               </div>
+
               <div>
-                <p className='lg:text-lg text-md text-gray-400'>Confirm Password</p>
-                <div className='flex'>
+                <label className="block text-sm font-bold text-gray-700">Confirm Password</label>
+                <div className="relative">
                   <input
                     type={showPass ? 'text' : 'password'}
-                    required
-                    className='border-b-2 w-full border-gray-200 outline-none'
-                    name='confirmPassword'
+                    name="confirmPassword"
                     value={data.confirmPassword}
                     onChange={handleOnChange}
+                    required
+                    className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
                   />
-                  <div className='cursor-pointer' onClick={() => setPass((preve) => !preve)}>
-                    <span className='text-xl'>{showPass ? <IoMdEyeOff /> : <IoEye />} </span>
-                  </div>
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 text-gray-600 right-3"
+                    onClick={() => setPass(!showPass)}
+                  >
+                    {showPass ? <IoMdEyeOff /> : <IoEye />}
+                  </button>
                 </div>
               </div>
-              <p className='lg:text-base text-md text-gray-400'>
-                By continuing, you agree to <span className='text-[#00712D]'>My Kozan LLC</span> terms of Use and
-                <span className='text-[#00712D]'> Privacy Policy</span>
-              </p>
-              <div className='text-center mt-10'>
-                <button
-                  type='submit'
-                  className='p-3 w-full bg-[#E38734] hover:scale-105 duration-200 lg:text-xl text-lg text-white rounded-lg'
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </button>
-              </div>
             </div>
-          ) : (
-            <div className='space-y-6'>
-              <div>
-                <p className='lg:text-lg text-md text-gray-400'>Enter OTP</p>
-                <input
-                  type='text'
-                  required
-                  className='border-b-2 w-full border-gray-200 outline-none'
-                  value={otp}
-                  onChange={handleOtpChange}
-                />
-              </div>
-              <div className='text-center mt-10'>
-                <button
-                  type='submit'
-                  className='p-3 w-full bg-[#E38734] hover:scale-105 duration-200 lg:text-xl text-lg text-white rounded-lg'
-                  onClick={handleSubmit}
-                >
-                  Verify & Register
-                </button>
-              </div>
+
+            <div className="mt-8 text-center">
+              <button
+                type="submit"
+                className="w-full py-3 text-white transition duration-200 bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-600"
+              >
+                Register
+              </button>
             </div>
-          )}
-          <div className='flex flex-wrap justify-center items-center mt-5'>
-            <p className='text-center md:text-base text-sm'>Already Have an Account ?</p>
-            <Link to='/login'>
-              <span className='font-semibold cursor-pointer'>
-                <div className='flex justify-center items-center'>
-                  <img className='md:w-12 md:h-12 w-9 h-9 -hue-rotate-60' src='/assets/Images/sign/nnn.gif' alt='' />
-                  <p className='md:text-base text-sm'> Login</p>
-                </div>
-              </span>
-            </Link>
+          </form>
+        ) : (
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-bold text-gray-700">Enter OTP</label>
+              <input
+                type="text"
+                value={otp}
+                onChange={handleOtpChange}
+                required
+                className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
+              />
+            </div>
+
+            <div className="mt-8 text-center">
+              <button
+                type="submit"
+                className="w-full py-3 text-white transition duration-200 bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-600"
+                onClick={handleSubmit}
+              >
+                Verify OTP & Complete Registration
+              </button>
+            </div>
           </div>
+        )}
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-500">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-blue-500">
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </section>

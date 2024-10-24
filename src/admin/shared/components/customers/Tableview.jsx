@@ -77,7 +77,7 @@ const columns = [
   {field: 'First_Name', header: 'First Name'},
   {field: 'Last_Name', header: 'Last_Name'},
   {field: 'Email', header: 'Email',filter: true },
-  {field: 'Mobilenumber', header: 'Mobilenumber'},
+  {field: 'Mobile_Number', header: 'Mobilenumber'},
   {field: 'Status', header: 'Status', filter: true }
 ];
 

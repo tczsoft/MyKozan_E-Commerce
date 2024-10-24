@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { 
   LayoutDashboard, 
   Package, 
@@ -39,10 +39,10 @@ export default function Sidebar() {
       >
         {/* Logo Section */}
         <div className="px-6 py-4 border-b border-gray-200">
-          <a className="flex items-center gap-2" href="#" aria-label="Brand">
+          <Link to='/' className="flex items-center gap-2" href="#" aria-label="Brand">
             <img src="/assets/Images/Header/My_Kozan1.png" alt="" className="" />
             {/* <span className="text-lg font-bold text-gray-800">MyApp</span> */}
-          </a>
+          </Link>
         </div>
 
         {/* Navigation */}

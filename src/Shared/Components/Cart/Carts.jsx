@@ -133,7 +133,7 @@ function Cart() {
     if (!cart || cart.length === 0) {
         return (
             <div className="h-[50vh]  mb-24  flex justify-center items-center">
-                <div className=" ">
+                <div className="">
 
                     <img src="/assets/Images/Header/gif-empty.gif" alt="Empty-Cart" className="w-24 mx-auto" />
                     <h1 className="mb-4 text-xl">Your cart is empty</h1>
@@ -149,11 +149,11 @@ function Cart() {
 
     return (
         <section className="my-10 max-w-[70rem] mx-auto md:my-32 px-5 md:mt-32 mt-32">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
 
 
                 <h1 className="space-y-2 ">
-                    <p className="md:text-3xl text-base font-semibold ">Cart</p>
+                    <p className="text-base font-semibold md:text-3xl ">Cart</p>
 
                 </h1>
                 <div className="space-y-2">
@@ -166,12 +166,12 @@ function Cart() {
                     </button>
                 </div>
             </div>
-            <div className="grid md:grid-cols-2 grid-cols-1 items-start border mt-6">
-                <div className="grid  ">
+            <div className="grid items-start grid-cols-1 mt-6 border md:grid-cols-2">
+                <div className="grid ">
                     {cart.map((item) => (
                         <div className="grid grid-cols-1 max-w-[40rem]  ">
-                            <div key={item._id} className="flex items-center p-5 justify-between flex-wrap md:gap-0 gap-4    ">
-                                <div className="flex items-center gap-4 flex-wrap md:justify-start  justify-center w-full  ">
+                            <div key={item._id} className="flex flex-wrap items-center justify-between gap-4 p-5 md:gap-0 ">
+                                <div className="flex flex-wrap items-center justify-center w-full gap-4 md:justify-start ">
                                     <div className="flex-shrink-0 w-32 h-32">
                                         <img
 
@@ -181,7 +181,7 @@ function Cart() {
                                         />
                                     </div>
                                     <div className="flex flex-col gap-2">
-                                        <h2 className="text-xl  ">
+                                        <h2 className="text-xl ">
                                             {item?.productId?.Product_Name || "Unknown Product"}
                                         </h2>
                                         {/* <p className="text-gray-600">
@@ -219,9 +219,9 @@ function Cart() {
 
 
 
-                <div className="space-y-2 mx-auto   mt-5 border-l-1  p-4 md:pl-16">
+                <div className="p-4 mx-auto mt-5 space-y-2 border-l-1 md:pl-16">
 
-                    <div className="flex gap-2 items-center">
+                    <div className="flex items-center gap-2">
 
 
                         <p className="">Your Order</p>
@@ -233,7 +233,7 @@ function Cart() {
                     <p className="">(Including delivery and other charges)</p>
                     <div className="flex gap-3">
 
-                        <Link to="/product" className="block  text-center">
+                        <Link to="/product" className="block text-center">
                             <button className="bg-[#00712D] text-white py-2 md:text-base text-sm px-4 rounded hover:bg-[#005f26] transition-colors">
                                 Continue Shopping
                             </button>

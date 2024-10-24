@@ -18,6 +18,7 @@ import Myorders from "../Components/Your Orders/Myorders.jsx";
 import AdminRouter from "../admin/Router/AdminRouter.jsx";
 import Checkout from "../Shared/Components/Checkout/Checkout.jsx";
 import Profiles from "../Components/Profile/Profiles.jsx";
+import ProtectedRoute from "../Shared/Components/ProtectedRoute/ProtectedRoute.jsx";
 
 
 export default function Approuter() {
@@ -52,7 +53,9 @@ export default function Approuter() {
         </Route>
 
 
-        <Route path="/admin/*" element={<AdminRouter />} />
+        <Route element={<ProtectedRoute allowedRoles={['Admin']} />}>
+          <Route path="/admin/*" element={<AdminRouter />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

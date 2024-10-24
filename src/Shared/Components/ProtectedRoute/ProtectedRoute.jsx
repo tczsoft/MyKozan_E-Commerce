@@ -1,23 +1,12 @@
-
-
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../../Shared/Services/Store/useAuth';
+import useAuth from '../../services/store/useAuth';
 
 
-const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { user } = useAuth(); 
-  const userRole = user?.role;
-
-  if (!user) {
-  
-    return <Navigate to="/admin/dashboard" />;
-  }
-
-  if (allowedRoles.includes(userRole)) {
-  
-    return children ? children : <Outlet />;
-  } else {
- 
+const ProtectedRoute = ({ allowedRoles }) => {
+  const { userdetails } = useAuth();
+  const userRole = userdetails()?.Role; 
+  if (!userRole) {return <Navigate to="/login" />;}
+  if (allowedRoles.includes(userRole)) {return <Outlet />;} else {
     return <Navigate to="/" />;
   }
 };

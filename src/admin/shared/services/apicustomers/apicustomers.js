@@ -7,6 +7,11 @@ export const getallcustomers = async(params)=>{
    var res=await axios.get(`${apiurl()}/customers/apigetallcustomers`,{params:params, headers: {"Authorization" : `Bearer ${gettoken()}`}});
    return res.data;
 }
+export const updateCustomers = async (params) => {
+       const res = await axios.put(`${apiurl()}/customers/updatecustomer`, params, { headers: {Authorization: `Bearer ${gettoken()}` }
+       });
+       return res.data;  
+};
 
 export const getuniquevaluebyfield = async(params)=>{
    console.log(params)
@@ -62,3 +67,5 @@ export const deleteproducts=async(id)=>{
    var res=await axios.delete(`${apiurl()}/products/apideleteproduct`,{params:{_id:id}, headers: {"Authorization" : `Bearer ${gettoken()}`}});
    return res.data;
 }
+
+

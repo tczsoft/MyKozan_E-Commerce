@@ -5,7 +5,7 @@ import Tablepagination from '../../shared/others/Tablepagination';
 import Tableview from '../../shared/components/Orders/Tableview';
 import toast from "react-hot-toast";
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
-import { deleteorders, getallorders, getOrderitemsbyid, saveorders, updateorders } from '../../shared/services/apiorders/apiorders';
+import { apidownloadPDF, deleteorders, getallorders, getOrderitemsbyid, saveorders, updateOrder, updateorders } from '../../shared/services/apiorders/apiorders';
 import ViewProducts from '../../shared/components/Orders/ViewProducts';
 
 
@@ -26,7 +26,7 @@ export default function Orders() {
     const [ViewProduct, setViewProduct] = useState(false);
     const [ViewProductData,setViewProductData]=useState([]);
     const [ViewProductLoading, setViewProductLoading] = useState(false);
- 
+  const [downloadingpdf,setDownloadingpdf] = useState({});
 
     let isMounted = true;
 
@@ -110,10 +110,20 @@ export default function Orders() {
     };
 
     const downloadPDF = async (data)=>{
-        var resData = await apidownloadPDF(data)
-        const pdfBlob = new Blob([resData], { type: 'application/pdf' });
-        const pdfFileName = `${data}.pdf`;
-        saveAs(pdfBlob, pdfFileName);
+        setDownloadingpdf(prev =>({...prev,[data]:true}))
+        try {
+            var resData = await apidownloadPDF(data)
+            const pdfBlob = new Blob([resData], { type: 'application/pdf' });
+            const pdfFileName = `${data}.pdf`;
+            saveAs(pdfBlob, pdfFileName);
+        } catch (error) {
+            console.error('Error downloading Pdf',error)
+            toast.error('Failed to download Pdf')
+        }finally{
+            setDownloadingpdf(prev =>({...prev,[data]:false}))
+        }
+ 
+
     }
 
     const viewProducts = async(Order_id) =>{
@@ -128,7 +138,7 @@ export default function Orders() {
                 <Tableheadpanel newform={newform} setglobalfilter={setglobalfilter} />
 
                 <Tableview tabledata={tabledata} totalRecords={totalRecords} first={first} editfrom={editfrom} handledelete={handledelete} 
-                    cusfilter={cusfilter} filtervalues={filtervalues} onPage={onPage} page={page} viewProducts={viewProducts} downloadPDF={downloadPDF}/>
+                    cusfilter={cusfilter} filtervalues={filtervalues} onPage={onPage} page={page} viewProducts={viewProducts} downloadPDF={downloadPDF} downloadingpdf={downloadingpdf}/>
 
                 <Tablepagination page={page} first={first} rows={rows} totalRecords={totalRecords} onPage={onPage} setRows={setRows} /> 
                 <Addandeditform visible={visible} setVisible={setVisible} loading={loading} formdata={formdata} setFormdata={setFormdata}

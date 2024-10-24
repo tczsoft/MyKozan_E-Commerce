@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { getProductbyId } from '../../Services/products/apiProducts';
 import UseCart from "../../Services/Store/UseCart";
@@ -18,6 +18,7 @@ function ProductCard() {
   const [cart, setCart] = useState([]);
   const [zoom, setZoom] = useState({ backgroundPosition: '0% 0%', backgroundSize: '100%' });
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
@@ -74,6 +75,16 @@ function ProductCard() {
   if (!productDetails) {
     return <div>No product details available.</div>;
   }
+
+  const handleBuyNow = (product) => {
+    if (!isLoggedIn) {
+      toast.error("Please log in to Buy items!");
+      navigate('/login')
+      return;
+    }
+    localStorage.setItem("buyNowProduct", JSON.stringify(product));
+    navigate("/checkout", { state: { product } }); // Navigate to checkout with product state
+  };
   return (
     <section className='mx-auto max-w-[70rem] px-5 my-10 lg:mt-0 mt-32'>
       {productDetails &&
@@ -93,7 +104,7 @@ function ProductCard() {
               <p>No Images Available</p>
             )}
           </div>
-          <div className=' col-span-4'>
+          <div className='col-span-4 '>
             {/* <div
               className='relative overflow-hidden w-full lg:h-[420px] md:h-[560px] z-30 h-[320px]'
               onMouseMove={handleMouseMove}
@@ -146,18 +157,16 @@ function ProductCard() {
 
             {/* </div> */}
           </div>
-          <div className='flex flex-col col-span-5 space-y-5 gap-3'>
+          <div className='flex flex-col col-span-5 gap-3 space-y-5'>
             <div>
-              <p className='text-3xl text-gray-400 mb-2'>
+              <p className='mb-2 text-3xl text-gray-400'>
                 {productDetails.Product_Name}
               </p>
               <p className="text-base text-[#E38734]"> <span className='text-xl font-bold'>  $ {productDetails.Sale_Price} </span> (min 50 pcs)</p>
-              <div className='flex  gap-3  mt-4'>
-                <Link to='/checkout'>
-                  <button className='border py-2 px-3 rounded-lg hover:scale-105 duration-200 text-white bg-[#00712D]'>
+              <div className='flex gap-3 mt-4'>
+                  <button   onClick={() => handleBuyNow(productDetails)}  className='border py-2 px-3 rounded-lg hover:scale-105 duration-200 text-white bg-[#00712D]'>
                     Buy Now
                   </button>
-                </Link>
                 <button
                   className='border py-2 lg:px-4 px-2 rounded-lg flex gap-1 text-white hover:scale-105 duration-200 bg-[#E38734]  '
                   onClick={() => handleAddToCart(productDetails)}
@@ -171,7 +180,7 @@ function ProductCard() {
               </div>
             </div>
             <div className='border border-gray-100 '>
-              <p className="md:text-xl text-sm font-semibold p-2 text-black  border-b-1">Specifications</p>
+              <p className="p-2 text-sm font-semibold text-black md:text-xl border-b-1">Specifications</p>
               <div className='p-2' dangerouslySetInnerHTML={
                 { __html: productDetails.Product_Description }
               } />

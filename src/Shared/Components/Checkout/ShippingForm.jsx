@@ -24,7 +24,7 @@ export default function ShippingForm(props) {
                             <div className="mb-2">
                                 <label>Mobile Number</label>
                             </div>
-                            <input type="text" name="Mobilenumber" value={formdata?.Mobilenumber || ''} onChange={handlechange} className="w-full px-4 py-2 border rounded-md outline-none" required />
+                            <input type="text" name="Mobile_Number" value={formdata?.Mobile_Number || ''} onChange={handlechange} className="w-full px-4 py-2 border rounded-md outline-none" required />
                         </div>
                         <div className="mb-2">
                             <div className="mb-2">

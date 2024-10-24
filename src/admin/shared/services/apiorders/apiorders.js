@@ -31,3 +31,17 @@ export const getOrderitemsbyid = async(Order_id)=>{
     var res= await axios.get(`${apiurl()}/orders/apigetorderitemsbyid`,{params:{Order_id:Order_id},headers: {"Authorization" : `Bearer ${gettoken()}`}});
     return res.data;
 }
+export const apidownloadPDF = async(datas)=>{
+    var res = await axios.post(`${apiurl()}/orders/downloadPDF`,{Order_id:datas},{ responseType:'blob', headers: {"Authorization" : `Bearer ${gettoken()}`}});
+    return res.data;
+ }
+
+ export const updateOrder = async(datas)=>{
+    try {
+       var res=await axios.put(`${apiurl()}/orders/apiupdateorder`,datas,{params:{_id:datas._id}, headers: {"Authorization" : `Bearer ${gettoken()}`}});
+       return res.data;
+    }
+    catch(err){
+       console.log(err);
+    }
+}
