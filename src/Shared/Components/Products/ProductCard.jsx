@@ -14,6 +14,7 @@ import { BiArrowToTop } from "react-icons/bi";
 import { BiArrowFromTop } from "react-icons/bi";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import { MdOutlineZoomIn } from "react-icons/md";
 
 
 function ProductCard() {
@@ -181,72 +182,24 @@ function ProductCard() {
             </button>
           </div>
           <div className='col-span-4 '>
-            {/* <div
-              className='relative overflow-hidden w-full lg:h-[420px] md:h-[560px] z-30 h-[320px] lg:hidden block'
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={{
-                backgroundImage: `url(${apiurl()}/${productDetails.Images[currentProductImage]})`,
-                backgroundSize: zoom.backgroundSize,
-                backgroundPosition: zoom.backgroundPosition,
-                backgroundRepeat: 'no-repeat',
 
-              }}
-            >
-            </div> */}
-            {/* <div className=" flex justify-center lg:block hidden">
-              <ReactImageMagnify
-                {...{
-                  smallImage: {
-                    alt: 'Product Image',
-                    isFluidWidth: true,
-                    src: `${apiurl()}/${productDetails.Images[currentProductImage]}`,
-                  },
-                  largeImage: {
-                    src: `${apiurl()}/${productDetails.Images[currentProductImage]}`,
-                    width: 1600, // Adjusted width
-                    height: 1200, // Adjusted height
-                  },
-                  enlargedImagePosition: 'beside',
-                  enlargedImageContainerDimensions: {
-                    width: '120%', // Reduced size
-                    height: '120%',
-                  },
-                  enlargedImageContainerStyle: {
-                    zIndex: 9999, // Set high z-index to avoid overlap with other elements
-                  },
-                  shouldUsePositiveSpaceLens: true,
-                }}
+            <div className='relative'>
+
+
+              <img
+                className='w-full cursor-zoom-in -z-30  absolute'
+                src={`${apiurl()}/${productDetails.Images[currentProductImage]}`}
+                alt='product-thumbnail'
+
               />
-            </div> */}
 
+              <div className='absolute right-0 p-4'>
+                <button type="button"  onClick={() => setOpen(true)}>
+                  <MdOutlineZoomIn className='text-4xl' color='white' />
+                </button>
+              </div>
 
-
-            <img
-              className='w-full cursor-zoom-in -z-30 block'
-              src={`${apiurl()}/${productDetails.Images[currentProductImage]}`}
-              alt='product-thumbnail'
-
-            />
-
-
-
-            <button type="button" onClick={() => setOpen(true)}>
-              Open Lightbox
-            </button>
-
-            {/* <Lightbox
-              open={open}
-              close={() => setOpen(false)}
-              slides={[
-                { src: "/image1.jpg" },
-                { src: "/image2.jpg" },
-                { src: "/image3.jpg" },
-              ]}
-            />
- */}
-
-
+            </div>
             <Lightbox
               open={open}
               close={() => setOpen(false)}
@@ -274,7 +227,7 @@ function ProductCard() {
 
 
 
-            {/* </div> */}
+
           </div>
           <div className='flex flex-col col-span-5 gap-3 space-y-5'>
             <div>
