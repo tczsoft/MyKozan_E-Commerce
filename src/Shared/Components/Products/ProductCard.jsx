@@ -89,7 +89,6 @@ function ProductCard() {
   if (!productDetails) {
     return <div>No product details available.</div>;
   }
-
   const scrollToThumbnail = (index) => {
     setCurrentProductImage(index);
     if (thumbnailRef.current) {
@@ -100,7 +99,6 @@ function ProductCard() {
       }
     }
   };
-
   const scrollUp = () => {
     if (thumbnailRef.current) {
       thumbnailRef.current.scrollBy({ top: -65, behavior: 'smooth' }); // Adjust scroll amount if needed
@@ -171,9 +169,6 @@ function ProductCard() {
                 <p>No Images Available</p>
               )}
             </div>
-
-
-
             <button
               onClick={scrollDown}
               className='relative left-1/2 transform -translate-x-1/2 z-10 px-3 py-1 '
@@ -194,7 +189,7 @@ function ProductCard() {
               />
 
               <div className='absolute right-0 p-4'>
-                <button type="button"  onClick={() => setOpen(true)}>
+                <button type="button" onClick={() => setOpen(true)}>
                   <MdOutlineZoomIn className='text-4xl' color='white' />
                 </button>
               </div>
@@ -224,8 +219,6 @@ function ProductCard() {
                 justifyContent: 'center', // Center the thumbnails
               }}
             />
-
-
 
 
           </div>
