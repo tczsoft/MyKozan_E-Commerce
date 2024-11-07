@@ -41,7 +41,7 @@ function Login() {
   };
 
   return (
-    <section className="flex items-center justify-center px-2 my-20 md:mt-0 mt-36">
+    <section className="flex items-center justify-center px-2 my-20 md:mt-32 mt-28">
       <div className="lg:max-w-[30rem] mx-auto border bg-white shadow-md rounded-lg">
         <div className="flex justify-center items-center gap-2 bg-[#00712D]">
           <h1 className="py-4 text-lg font-bold text-center text-white lg:text-xl">Login</h1>

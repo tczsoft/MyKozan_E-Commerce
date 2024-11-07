@@ -72,10 +72,7 @@ function Sign() {
 
   const handleRegister = async () => {
     try {
-      const response = await apiverifyotp({
-        Email: data.email,
-        OTP: otp,
-      });
+      const response = await apiverifyotp({ Email: data.email, OTP: otp });
 
       if (response.status === 'Sucessfully registered') {
         toast.success('Registration successful! Now you can Login.');
@@ -105,9 +102,7 @@ function Sign() {
           {otpStage ? 'Verify Your OTP' : 'Sign Up for an Account'}
         </h1>
         <p className="mb-8 text-center text-gray-500">
-          {otpStage
-            ? 'Enter the OTP sent to your email to complete the registration.'
-            : 'Create an account by filling in the details below.'}
+          {otpStage ? 'Enter the OTP sent to your email to complete the registration.' : 'Create an account by filling in the details below.'}
         </p>
 
         {!otpStage ? (
@@ -115,134 +110,60 @@ function Sign() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-bold text-gray-700">First Name</label>
-                <input
-                  type="text"
-                  name="First_Name"
-                  value={data.First_Name}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
+                <input type="text" name="First_Name" value={data.First_Name} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700">Last Name</label>
-                <input
-                  type="text"
-                  name="Last_Name"
-                  value={data.Last_Name}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
+                <input type="text" name="Last_Name" value={data.Last_Name} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-bold text-gray-700">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={data.email}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
+                <input type="email" name="email" value={data.email} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
               </div>
 
               <div>
                 <label className="block text-sm font-bold text-gray-700">Mobile Number</label>
-                <input
-                  type="text"
-                  name="Mobile_Number"
-                  value={data.Mobile_Number}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
+                <input type="text" name="Mobile_Number" value={data.Mobile_Number} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-gray-700">Address</label>
+              <textarea name="Address" value={data.Address} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" ></textarea>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div>
+                <label className="block text-sm font-bold text-gray-700">City</label>
+                <input type="text" name="City" value={data.City} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700">State</label>
+                <input type="text" name="State" value={data.State} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-bold text-gray-700">Country</label>
-                <input
-                  type="text"
-                  name="Country"
-                  value={data.Country}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-700">State</label>
-                <input
-                  type="text"
-                  name="State"
-                  value={data.State}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div>
-                <label className="block text-sm font-bold text-gray-700">City</label>
-                <input
-                  type="text"
-                  name="City"
-                  value={data.City}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
+                <input type="text" name="Country" value={data.Country} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
               </div>
 
               <div>
                 <label className="block text-sm font-bold text-gray-700">Zip Code</label>
-                <input
-                  type="text"
-                  name="Zipcode"
-                  value={data.Zipcode}
-                  onChange={handleOnChange}
-                  required
-                  className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                />
+                <input type="text" name="Zipcode" value={data.Zipcode} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
               </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-bold text-gray-700">Address</label>
-              <textarea
-                name="Address"
-                value={data.Address}
-                onChange={handleOnChange}
-                rows={3}
-                required
-                className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-              ></textarea>
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div>
                 <label className="block text-sm font-bold text-gray-700">Password</label>
                 <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    name="password"
-                    value={data.password}
-                    onChange={handleOnChange}
-                    required
-                    className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 text-gray-600 right-3"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
+                  <input type={showPassword ? 'text' : 'password'} name="password" value={data.password} onChange={handleOnChange} className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" required />
+                  <button type="button" className="absolute inset-y-0 text-gray-600 right-3" onClick={() => setShowPassword(!showPassword)} >
                     {showPassword ? <IoMdEyeOff /> : <IoEye />}
                   </button>
                 </div>
@@ -251,19 +172,8 @@ function Sign() {
               <div>
                 <label className="block text-sm font-bold text-gray-700">Confirm Password</label>
                 <div className="relative">
-                  <input
-                    type={showPass ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={data.confirmPassword}
-                    onChange={handleOnChange}
-                    required
-                    className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 text-gray-600 right-3"
-                    onClick={() => setPass(!showPass)}
-                  >
+                  <input type={showPass ? 'text' : 'password'} name="confirmPassword" value={data.confirmPassword} onChange={handleOnChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
+                  <button type="button" className="absolute inset-y-0 text-gray-600 right-3" onClick={() => setPass(!showPass)} >
                     {showPass ? <IoMdEyeOff /> : <IoEye />}
                   </button>
                 </div>
@@ -271,10 +181,7 @@ function Sign() {
             </div>
 
             <div className="mt-8 text-center">
-              <button
-                type="submit"
-                className="w-full py-3 text-white transition duration-200 bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-600"
-              >
+              <button type="submit" className="w-full py-3 text-white transition duration-200 bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-600" >
                 Register
               </button>
             </div>
@@ -283,21 +190,11 @@ function Sign() {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-bold text-gray-700">Enter OTP</label>
-              <input
-                type="text"
-                value={otp}
-                onChange={handleOtpChange}
-                required
-                className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]"
-              />
+              <input type="text" value={otp} onChange={handleOtpChange} required className="w-full px-4 py-2 mt-1 transition duration-300 border-b-2 border-gray-300 outline-none focus:border-[#E38734]" />
             </div>
 
             <div className="mt-8 text-center">
-              <button
-                type="submit"
-                className="w-full py-3 text-white transition duration-200 bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-600"
-                onClick={handleSubmit}
-              >
+              <button type="submit" className="w-full py-3 text-white transition duration-200 bg-blue-500 rounded-md md:w-1/2 hover:bg-blue-600" onClick={handleSubmit} >
                 Verify OTP & Complete Registration
               </button>
             </div>
@@ -307,9 +204,7 @@ function Sign() {
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
             Already have an account?{' '}
-            <Link to="/login" className="font-medium text-blue-500">
-              Login
-            </Link>
+            <Link to="/login" className="font-medium text-blue-500"> Login </Link>
           </p>
         </div>
       </div>

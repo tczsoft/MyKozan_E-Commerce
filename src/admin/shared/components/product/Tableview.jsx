@@ -38,22 +38,10 @@ const Tableview = (props) => {
   const image = (rowData) => {
     return (
       <div className="w-32 h-32">
-        <Swiper
-          modules={[Pagination, Navigation, Autoplay]}
-          spaceBetween={10}
-          slidesPerView={1}
-          // navigation
-          // pagination={{ clickable: false }}
-          autoplay={{ delay: 2000 }}
-          className="w-full h-full"
-        >
+        <Swiper modules={[Pagination, Navigation, Autoplay]} spaceBetween={10} slidesPerView={1} autoplay={{ delay: 2000 }} className="w-full h-full" >
           {rowData['Images'].map((img, index) => (
             <SwiperSlide key={index} className="flex items-center justify-center">
-              <img
-                src={`${apiurl()}/${img}`}
-                alt={`Product Image ${index + 1}`}
-                className="object-cover w-full h-full rounded"
-              />
+              <img src={`${apiurl()}/${img}`} alt={`Product Image ${index + 1}`} className="object-cover w-full h-full rounded" />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -91,17 +79,9 @@ const Tableview = (props) => {
 
   const Filter = (key) => (
     <div onClick={() => getOption(key)}>
-      <MultiSelect
-        value={tempFilterValues[key.field]}
-        options={filterOptions}
-        optionLabel="value"
-        className="p-column-filter"
-        virtualScrollerOptions={{ itemSize: 43 }}
-        maxSelectedLabels={1}
-        filter
-        onChange={(e) => setTempFilterValues((prev) => ({ ...prev, [key.field]: e.value }))}
-        placeholder={`Select ${key.field.charAt(0).toUpperCase() + key.field.slice(1)}`}
-        panelFooterTemplate={
+      <MultiSelect value={tempFilterValues[key.field]} options={filterOptions} optionLabel="value" className="p-column-filter" virtualScrollerOptions={{ itemSize: 43 }}
+        maxSelectedLabels={1} filter onChange={(e) => setTempFilterValues((prev) => ({ ...prev, [key.field]: e.value }))}
+        placeholder={`Select ${key.field.charAt(0).toUpperCase() + key.field.slice(1)}`} panelFooterTemplate={
           <div className="flex justify-between p-2 mt-2">
             <Button label="Clear" onClick={() => handleClearFilters(key.field)} className="p-1 text-white bg-blue-500 w-[45%]" />
             <Button label="Apply" onClick={() => handleApplyFilters(key.field)} className="p-1 mx-1 text-white bg-blue-500 w-[45%]" />
@@ -123,33 +103,16 @@ const Tableview = (props) => {
 
   return (
     <div>
-      <DataTable
-        rowClassName={() => 'border-b border-secondary'}
-        selectionMode="single"
-        value={tabledata}
-        scrollable
-        scrollHeight="680px"
-        className="!text-sm"
-        stateStorage="session"
-        stateKey="dt-state-demo-local"
-      >
+      <DataTable rowClassName={() => 'border-b border-secondary'} selectionMode="single" value={tabledata} scrollable scrollHeight="640px" className="!text-sm"
+        stateStorage="session" stateKey="dt-state-demo-local" >
         <Column header="Action" body={actionbotton} />
         <Column header="Images" body={image} />
         <Column header="Product Name" body={name} />
         <Column header="Description" body={description} />
 
         {columns.map((col, i) => (
-          <Column
-            key={i}
-            field={col.field}
-            header={col.header}
-            filter={col.filter}
-            filterElement={Filter(col)}
-            showFilterMenuOptions={false}
-            showApplyButton={false}
-            showClearButton={false}
-            showFilterMatchModes={false}
-          />
+          <Column key={i} field={col.field} header={col.header} filter={col.filter} filterElement={Filter(col)} showFilterMenuOptions={false}
+            showApplyButton={false} showClearButton={false} showFilterMatchModes={false} />
         ))}
       </DataTable>
     </div>

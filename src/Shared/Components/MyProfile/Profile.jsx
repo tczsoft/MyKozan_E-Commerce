@@ -74,7 +74,7 @@ function Profile() {
 
     return (
         <>
-            <section className='max-w-[70rem] px-5 mx-auto lg:mt-0 md:mt-36 mt-28'>
+            <section className='max-w-[70rem] px-5 mx-auto lg:mt-32 mt-28'>
                 <div className='my-10'>
                     <div className='lg:max-w-[50rem]  mx-auto border border-[#00712d] rounded-2xl'>
                         <div className='p-3 space-y-3 text-center'>

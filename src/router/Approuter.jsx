@@ -14,11 +14,12 @@ import Forgot from "../Components/Forgot Password/Forgot.jsx";
 import OrderDetails from "../Shared/Components/OrderConfirmation/OrderDetails .jsx";
 import ScrollToTop from "./ScrollToTop.jsx";
 
-import Myorders from "../Components/Your Orders/Myorders.jsx";
+
 import AdminRouter from "../admin/Router/AdminRouter.jsx";
 import Checkout from "../Shared/Components/Checkout/Checkout.jsx";
 import Profiles from "../Components/Profile/Profiles.jsx";
 import ProtectedRoute from "../Shared/Components/ProtectedRoute/ProtectedRoute.jsx";
+import MyOrders from "../Components/MyOrders/Myorders.jsx";
 
 
 export default function Approuter() {
@@ -35,7 +36,7 @@ export default function Approuter() {
         <Route element={<Main />}>
 
           <Route path="/" element={<Home />} />
-          <Route path="/productsdetail/:id" element={<ProductCard />} />
+          <Route path="/productdetails/:id" element={<ProductCard />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
@@ -47,7 +48,7 @@ export default function Approuter() {
           <Route path="/forgot" element={<Forgot />} />
           <Route path="/details" element={<OrderDetails />} />
           <Route path="/checkout" element={<Checkout/>} />
-          <Route path="/yourorder" element={<Myorders/>} />
+          <Route path="/myorder" element={<MyOrders/>} />
           <Route path="/profile" element={<Profiles/>} />
 
         </Route>

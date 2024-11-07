@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Hamburger from 'hamburger-react';
-import { RiLogoutCircleRLine } from 'react-icons/ri';
+import { RiLogoutCircleRLine, RiShieldUserFill } from 'react-icons/ri';
 import useAuth from '../../Shared/Services/Store/useAuth';
 import useCartStore from "../../Shared/Services/Store/UseCart";
 import ProductLists from '../../Shared/Components/Products/ProductLists';
@@ -44,13 +44,7 @@ export default function Header() {
 
           <div className="relative hidden md:block w-[30vw] cursor-pointer">
             <form onSubmit={handleSearchSubmit}>
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={`w-full rounded-md px-2 py-1 border focus:outline-[#E38734]`}
-              />
+              <input type="text" placeholder="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className={`w-full rounded-md px-2 py-1 border focus:outline-[#E38734]`} />
             </form>
           </div>
 
@@ -61,22 +55,19 @@ export default function Header() {
             <Link to="/cart">
               <div className="flex">
                 <div className="relative">
-                  <img
-                    className="cursor-pointer h-7 opacity-85"
-                    src="/assets/Images/Header/Shopping Cart (1).png"
-                    alt="cart"
-                    title="Cart"
-                  />
+                  <img className="cursor-pointer h-7 opacity-85" src="/assets/Images/Header/Shopping Cart (1).png" alt="cart" title="Cart" />
                   <div className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-green-600 rounded-full -top-2 -right-2">
                     {cart.length}
                   </div>
                 </div>
               </div>
             </Link>
-            <Link to={isLoggedIn ? '/' : '/login'} onClick={isLoggedIn ? logout : null}>
+            <Link to={isLoggedIn ? '/profile' : '/login'} >
               <div className="relative">
                 {isLoggedIn ? (
-                  <RiLogoutCircleRLine className="text-2xl text-[#E38734]" title="Logout" />
+                  <div className="text-2xl text-[#E38734]" title="My Profile" >
+                  <i class="fa-regular fa-circle-user"></i>
+                  </div>
                 ) : (
                   <>
                     <img className="cursor-pointer h-7 opacity-85" src="/assets/Images/Header/Login.png" alt="login" />
@@ -124,29 +115,17 @@ export default function Header() {
               </Link>
 
               {isLoggedIn && userRole === 'Admin' && (
-                <Link
-                  to='/admin/dashboard'
-                  className={`block ${isActive('/admin/dashboard') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`}
-                  onClick={toggleMenu}
-                >
+                <Link to='/admin/dashboard' className={`block ${isActive('/admin/dashboard') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`} onClick={toggleMenu} >
                   Admin Dashboard
                 </Link>
               )}
               {isLoggedIn && userRole !== 'Admin' && (
                 <>
-                  <Link
-                    to='/profile'
-                    className={`block ${isActive('/profile') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`}
-                    onClick={toggleMenu}
-                  >
+                  <Link to='/profile' className={`block ${isActive('/profile') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`} onClick={toggleMenu} >
                     My Profile
                   </Link>
-                  <Link
-                    to='/yourorder'
-                    className={`block ${isActive('/yourorder') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`}
-                    onClick={toggleMenu}
-                  >
-                    Your Orders
+                  <Link to='/myorder' className={`block ${isActive('/myorder') ? 'text-[#E38734]' : 'hover:text-[#E38734] cursor-pointer'}`} onClick={toggleMenu} >
+                    My Order
                   </Link>
                 </>
               )}

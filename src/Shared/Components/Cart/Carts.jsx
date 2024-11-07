@@ -150,7 +150,7 @@ function Cart() {
     }
 
     return (
-        <section className="my-10 max-w-[70rem] mx-auto md:my-32 lg:h-screen px-5 md:mt-32 mt-32">
+        <section className="my-10 max-w-[70rem] mx-auto md:my-32 lg:h-[60vh] px-5 md:mt-32 mt-32">
             <div className="flex items-center justify-between">
 
 

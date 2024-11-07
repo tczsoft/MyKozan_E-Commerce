@@ -103,7 +103,7 @@
 //               className="overflow-hidden transition-all duration-300 bg-white border-2 shadow-sm group rounded-xl shade"
 //             >
 //               <div className="p-4">
-//                 <Link to={`/productsdetail/${product._id}`} className="block">
+//                 <Link to={`/productdetails/${product._id}`} className="block">
 //                   <div className="relative mb-4 overflow-hidden bg-gray-100 rounded-lg aspect-square">
 //                     <img
 //                       src={`${apiurl()}/${product.Images[0]}`}
@@ -262,7 +262,7 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen max-w-[75rem] mx-auto px-5">
+    <div className="min-h-[70vh] max-w-[75rem] mx-auto px-5 mt-32">
       <div className="py-10 mx-auto lg:py-0 max-w-7xl sm:px-6 lg:px-8">
         <div className="flex justify-between ">
           <h1 className="hidden mt-4 mb-8 text-base font-bold text-gray-900 md:text-3xl md:mt-0 md:block"> Products</h1>
@@ -285,7 +285,7 @@ const Products = () => {
               className="overflow-hidden transition-all duration-300 bg-white border-2 shadow-sm group rounded-xl shade"
             >
               <div className="p-4">
-                <Link to={`/productsdetail/${product._id}`} className="block">
+                <Link to={`/productdetails/${product._id}`} className="block">
                   <div className="relative mb-4 overflow-hidden bg-gray-100 rounded-lg aspect-square">
                     <img
                       src={`${apiurl()}/${product.Images[0]}`}

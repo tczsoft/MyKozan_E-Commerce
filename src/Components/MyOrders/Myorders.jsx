@@ -101,7 +101,7 @@ const MyOrders = () => {
     return orders.slice(start, end);
   }, [page, orders]);
   return (
-    <section className="my-10 px-4 max-w-[70rem] mx-auto md:my-36 lg:mt-0 mt-28">
+    <section className="my-10 px-4 max-w-[70rem] mx-auto md:my-36 lg:mt-32 mt-28">
       <h1 className="mb-6 text-2xl font-bold">My Orders</h1>
       <div className='space-y-4'>
         {/* Order statistics */}

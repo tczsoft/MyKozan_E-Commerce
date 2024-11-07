@@ -84,7 +84,7 @@ function ProductCard() {
     setZoom({ backgroundPosition: '0% 0%', backgroundSize: '100%' });
   };
   if (loading) {
-    return <div>Loading product details...</div>;
+    return <div className="flex justify-center items-center min-h-[70vh]"><div>Loading product details...</div></div> ;
   }
   if (!productDetails) {
     return <div>No product details available.</div>;

@@ -7,7 +7,7 @@ function Main() {
   return (
     <div>
       <Header/>
-      <main className='lg:mt-36 mt-[5rem]'>
+      <main className='lg:mt-[103px] mt-[5rem]'>
         <Outlet/>
       </main>
       <Footer/>

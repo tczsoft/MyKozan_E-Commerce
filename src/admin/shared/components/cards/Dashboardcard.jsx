@@ -17,8 +17,12 @@ export default function Dashboardcard() {
     ],
   };
 
+  const options = {
+    maintainAspectRatio: true,
+    aspectRatio: 3.8,}
+
   return (
-    <div className="min-h-screen p-10 bg-white bg-opacity-30 backdrop-blur-md">
+    <div className="min-h-[70vh] px-5 bg-white bg-opacity-30 backdrop-blur-md">
       {/* Grid Section */}
       <div className="grid gap-6 mb-10 md:grid-cols-2 lg:grid-cols-4">
         {/* Card 1: Customers */}
@@ -69,7 +73,7 @@ export default function Dashboardcard() {
       {/* Additional Section: Orders Overview Chart */}
       <div className="p-6 bg-white shadow-lg bg-opacity-20 backdrop-blur-lg rounded-xl">
         <h2 className="mb-4 text-xl font-bold text-black">Orders Overview</h2>
-        <Line data={data} />
+        <Line data={data} options={options} className="w-full md:w-30rem" />
       </div>
     </div>
   );
