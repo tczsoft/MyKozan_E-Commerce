@@ -1,13 +1,38 @@
 import { Cart } from "../../models/CartModel.js"
 
+// export const savecart = async (req, res, next) => {
+//     try {
+//       const resdata = await new Cart(req.body).save()
+//       res.send(resdata)
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+
+
 export const savecart = async (req, res, next) => {
-    try {
-      const resdata = await new Cart(req.body).save()
-      res.send(resdata)
-    } catch (err) {
-      console.error(err)
+  try {
+    const { Email, productId, Quantity } = req.body;
+    const existingCartItem = await Cart.findOne({ Email, productId });
+    if (existingCartItem) {
+      existingCartItem.Quantity += Quantity;
+      await existingCartItem.save();
+      return res.send({ message: "Product quantity updated in cart", cart: existingCartItem });
     }
+    const newCartItem = new Cart({
+      Email,
+      productId,
+      Quantity,
+    });
+
+    const resdata = await newCartItem.save();
+    return res.send({ message: "Product added to cart", cart: resdata });
+
+  } catch (err) {
+    console.error("Error saving cart:", err);
+    return res.send({ message: "Server error" });
   }
+};
 
   export const getAllCart = async (req, res, next) => {
     try {

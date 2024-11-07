@@ -81,13 +81,14 @@ const invoiceslipdesign = async (invoice) => {
             <th colspan="2" class="th1" style="margin-top:0px;padding-top:0px">
               <div>
                 <p><b>Customer Name:</b> ${invoice.Billing_Name}</p>
-                <p><b>Mobile Number:</b> ${invoice.Mobilenumber?invoice.Mobilenumber:"-"}</p>
+                <p><b>Mobile Number:</b> ${invoice.Mobile_Number?invoice.Mobile_Number:"-"}</p>
                 <p><b>Address:</b> ${invoice?.DeliveryAddress?.Address},<br/> ${invoice?.DeliveryAddress?.City}, ${invoice?.DeliveryAddress?.State},<br/> ${invoice?.DeliveryAddress?.Country} ${invoice?.DeliveryAddress?.Zipcode}</p>
               </div>
             </th>
             <th colspan="3" class="th2" style="margin-top:0px;padding-top:0px">
               <div>
                 <p>Order ID: ${invoice.Order_id}</p>
+                    <p><strong>Invoice ID:</strong> ${invoice.Invoice_ID}</p>
                 <p>Order Date: ${moment(invoice.Order_Date).tz('America/Los_Angeles').format('DD-MM-YYYY')}</p>
               </div>
             </th>
@@ -133,7 +134,7 @@ const generatepdf = async (id) => {
   const DeliveryAddress = await Shiping.findOne({_id:orderdata.Delivery_Address_id}).lean();
   const htmlContent = await invoiceslipdesign({ ...orderdata, ...{ items: ordermastedata },DeliveryAddress:DeliveryAddress })
 
-  const imageResponse = await axios.get(`${process.env.URL}/images/logo.png`, { responseType: 'arraybuffer' });
+  const imageResponse = await axios.get(`${process.env.URL}/assets/Images/Header/My_Kozan1.png`, { responseType: 'arraybuffer' });
   const imageBuffer = Buffer.from(imageResponse.data);
   const imageType = imageResponse.headers['content-type'];
   const dataUrl = `data:${imageType || 'image/png'};base64,${imageBuffer.toString('base64')}`;

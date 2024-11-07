@@ -14,7 +14,7 @@ const Productschema = mongoose.Schema({
   Sale_Price: { type: String, default: 0 },
   Discount: { type: String, default: 0 },
   TAX_Percentage: String,
-  Avail_Stock: String,
+  Avail_Stock: Number,
   Item_Code: { type: String},
   Status: { type: String, default: 'Instock' } ,
  

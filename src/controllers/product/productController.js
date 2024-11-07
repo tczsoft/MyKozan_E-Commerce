@@ -146,7 +146,7 @@ export const deleteProduct = async (req, res) => {
 export const getProductbyId = async (req, res) => {
     try {
         const { _id } = req.query;
-        const product = await Product.find({ _id });
+        const product = await Product.findOne({ _id }).lean();
         res.send(product);
 
     } catch (error) {

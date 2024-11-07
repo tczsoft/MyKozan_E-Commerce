@@ -2,6 +2,7 @@ import moment from "moment-timezone";
 import { Order, Ordermaster } from "../../models/OrderModel.js";
 import { Product  } from "../../models/ProductModel.js";
 import mongoose from "mongoose";
+import { generatepdf } from "../../services/email/invoicedesign.js";
 
 
 export const getAllOrders = async (req, res, next) => {
@@ -79,15 +80,13 @@ export const createOrder = async (req, res) => {
 
 export const getOrderById = async (req, res) => {
   try {
-    const { Order_id } = req.query;
-    const orderItems = await Ordermaster.find({ Order_id });
-    res.status(200).json({ orderItems });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching order", error });
+    const { Order_id } = req.query
+    const resdata = await Ordermaster.find({ Order_id })
+    res.send(resdata)
+  } catch (err) {
+    console.error(err)
   }
-};
-
+}
 
 export const updateOrderStatus = async (req, res) => {
   try {
@@ -152,3 +151,27 @@ export const getfilteroptions= async (req, res, next) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const downloadPDF = async(req,res,next)=>{
+  try{
+    console.log(req.body.Order_id)
+    var datas = await generatepdf(req.body.Order_id);
+    res.send(datas)
+  }
+  catch(err){
+    console.error(err)
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
+}
+
+export const updateOrder = async (req, res, next) => {
+  try {
+    const { _id } = req.query
+    let previousVal = await Order.find({_id}).lean();
+    let updateData = req.body.Order_Status != previousVal.Order_Status ?{...req.body,Order_Last_Update_Date: new Date(moment().format('YYYY-MM-DD'))}:req.body;
+    const resdata = await Order.findOneAndUpdate({ _id }, updateData, { new: true });
+    res.send(resdata)
+  } catch (err) {
+    console.error(err)
+  }
+}
