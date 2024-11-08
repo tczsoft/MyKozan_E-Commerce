@@ -66,7 +66,7 @@ export default function Header() {
               <div className="relative">
                 {isLoggedIn ? (
                   <div className="text-2xl text-[#E38734]" title="My Profile" >
-                  <i class="fa-regular fa-circle-user"></i>
+                  <i className="fa-regular fa-circle-user"></i>
                   </div>
                 ) : (
                   <>
