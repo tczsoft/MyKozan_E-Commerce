@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useCart from "../../Services/Store/UseCart";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteAllcartItems, deletecartItem, getcartItems, updatecartItem } from "../../Services/Cart/apiCart";
@@ -150,16 +150,15 @@ function Cart() {
     }
 
     return (
+        <>
+        
+
         <section className="my-10 max-w-[70rem] mx-auto md:my-32 lg:h-[60vh] px-5 md:mt-32 mt-32">
             <div className="flex items-center justify-between">
-
-
                 <h1 className="space-y-2 ">
                     <p className="text-base font-semibold md:text-3xl ">Cart</p>
-
                 </h1>
                 <div className="space-y-2">
-
                     <button
                         onClick={handleClearCart}
                         className="px-4 py-2 text-white transition-colors bg-gray-500 rounded hover:bg-gray-600"
@@ -171,22 +170,18 @@ function Cart() {
             <div className="grid items-start grid-cols-1 mt-6 border md:grid-cols-2">
                 <div className="grid ">
                     {cart.map((item) => (
-                        <div className="grid grid-cols-1 max-w-[40rem]  ">
-                            <div key={item._id} className="flex flex-wrap items-center justify-between gap-4 p-5 md:gap-0 ">
-
-
-                                <div className="grid md:grid-cols-5 grid-cols-1 mx-auto gap-4">
-
-                                    <div className="flex-shrink-0 w-32 h-32 col-span-2  mx-auto">
+                        <div className="grid grid-cols-1 max-w-[40rem] " key={item._id}>
+                            <div  className="flex flex-wrap items-center justify-between gap-4 p-5 md:gap-0 ">
+                                <div className="grid grid-cols-1 gap-4 mx-auto md:grid-cols-5">
+                                    <div className="flex-shrink-0 w-32 h-32 col-span-2 mx-auto">
                                         <img
-
                                             src={`${apiurl()}/${item?.productId?.Images?.[0]}`}
                                             alt={item?.productId?.Product_Name || "Product"}
                                             className="object-cover w-full h-full rounded"
                                         />
                                     </div>
 
-                                    <div className="col-span-3 flex gap-10 items-center">
+                                    <div className="flex items-center col-span-3 gap-10">
 
                                         <div className="flex flex-col gap-2">
                                             <h2 className="text-xl ">
@@ -203,7 +198,7 @@ function Cart() {
                                                 <select
                                                     value={item.Quantity}
                                                     onChange={(e) => handleQuantityChange(item?.productId?._id, e)}
-                                                    className="px-2 py-1 bg-white  border-1 rounded"
+                                                    className="px-2 py-1 bg-white rounded border-1"
                                                 >
                                                     {quantityOptions.map((option) => (
 
@@ -214,7 +209,6 @@ function Cart() {
                                                 </select>
                                             </div>
                                         </div>
-
                                         <div>
                                             <button onClick={() => handleRemoveItem(item._id)}>
                                                 <img className="w-7 hover:scale-105" src="/assets/Images/Header/Remove.png" alt="" />
@@ -222,28 +216,15 @@ function Cart() {
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-                                <div className="w-full border bg-slate-100 mt-5 ">
+                                <div className="w-full mt-5 border bg-slate-100 ">
                                 </div>
                             </div>
-
-
-
                         </div>
-
                     ))}
                 </div>
 
-
-
                 <div className="p-4 mx-auto mt-5 space-y-2 border-l-1 md:pl-16">
-
                     <div className="flex items-center gap-2">
-
-
                         <p className="">Your Order</p>
                         <div className="px-4 rounded-2xl border text-sm text-[#005f26]  border-[#005f26] ">
                             {calculateTotalItems()}
@@ -264,14 +245,11 @@ function Cart() {
                         >
                             Checkout
                         </button>
-
-
                     </div>
                 </div>
             </div>
-
-
         </section >
+        </>
     );
 }
 

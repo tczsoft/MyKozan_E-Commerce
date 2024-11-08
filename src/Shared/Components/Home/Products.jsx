@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
@@ -10,11 +9,13 @@ import { getAllProducts } from '../../Services/products/apiProducts';
 import apiurl from '../../Services/api/apiendpoint';
 import useAuth from '../../services/store/useAuth';
 import toast from 'react-hot-toast';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
-    const { isLoggedIn, userdetails } = useAuth();
+    const { isLoggedIn } = useAuth();
+    
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -30,15 +31,85 @@ const Products = () => {
     const handleBuyNow = (product) => {
         if (!isLoggedIn) {
             toast.error("Please log in to Buy items!");
-            navigate('/login')
+            navigate('/login');
             return;
         }
         localStorage.setItem("buyNowProduct", JSON.stringify(product));
         navigate("/checkout", { state: { product } });
     };
 
+    const generateProductJSONLD = (product) => ({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.Product_Name,
+        "image": product.Images.map(image => `${apiurl()}/${image}`),
+        "description": "High-quality product available for bulk purchase",
+        "brand": {
+            "@type": "Brand",
+            "name": "MY KOZAN"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "USD",
+            "price": product.Sale_Price,
+            "itemCondition": "https://schema.org/NewCondition",
+            "availability": "https://schema.org/InStock",
+            "url": "https://mykozan.com" 
+        }
+    });
+
     return (
         <>
+        <HelmetProvider>
+            <Helmet>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>MY KOZAN - Home</title>
+
+                <meta name="keywords"
+                    content="MY KOZAN, eCommerce, online store, Doodle Board, Wooden Money Box, Selfie Stick, bulk product sales, best deals on Doodle Boards, Wooden Money Box store, Selfie Stick online, eCommerce Tamil Nadu, best online store for bulk products, Doodle Board for kids, creative gifts, Wooden Money Box for saving, high-quality selfie sticks, gift shop, MY KOZAN store, MY KOZAN products, Tamil Nadu eCommerce store, buy bulk Doodle Boards, shop for Wooden Money Box, selfie sticks online"
+                />
+
+                <meta name="description"
+                    content="MY KOZAN is an e-commerce web application offering a wide range of high-quality products like Doodle Boards, Wooden Money Boxes, and Selfie Sticks. We specialize in selling products in bulk and providing excellent deals to our customers."
+                />
+
+                <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content="/assets/Images/Logo/favi.png" />
+
+                <meta property="og:title"
+                    content="MY KOZAN - Your Ultimate Store for Doodle Boards, Wooden Money Boxes, and Selfie Sticks"
+                />
+
+                <meta property="og:description"
+                    content="MY KOZAN is an e-commerce web application offering a wide range of high-quality products like Doodle Boards, Wooden Money Boxes, and Selfie Sticks. We specialize in selling products in bulk and providing excellent deals to our customers."
+                />
+
+                <meta property="og:url" content="https://mykozan.com" />
+                <meta property="og:site" content="MY KOZAN" />
+                <meta property="og:site_name" content="MY KOZAN" />
+                <link rel="canonical" href="https://mykozan.com" />
+
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:site" content="@mykozan" />
+                <meta name="twitter:title"
+                    content="MY KOZAN | Your Store for Bulk Doodle Boards, Wooden Money Boxes, and Selfie Sticks"
+                />
+                <meta name="twitter:description"
+                    content="Discover our exclusive range of products, including Doodle Boards, Wooden Money Boxes, and Selfie Sticks. Shop in bulk and enjoy fantastic deals at MY KOZAN."
+                />
+                <meta name="twitter:image" content="/assets/Images/Logo/favi.png" />
+
+                {/* Add structured data for each product */}
+                {products.map((product, index) => (
+                    <script type="application/ld+json" key={index}>
+                        {JSON.stringify(generateProductJSONLD(product))}
+                    </script>
+                ))}
+            </Helmet>
+        </HelmetProvider>
+
             <section className="my-10">
                 <h1 className="text-center md:text-3xl text-xl border bg-[#00712D] w-fit mx-auto text-white p-2 rounded-lg">
                     Products
@@ -109,11 +180,10 @@ const Products = () => {
                                                 {product.Images.map((image, idx) => (
                                                     <SwiperSlide key={idx}>
                                                         <Link to='/product'>
-
                                                             <img
                                                                 src={`${apiurl()}/${image}`}
                                                                 alt={`Product Image ${idx}`}
-                                                                className="cursor-pointer "
+                                                                className="cursor-pointer"
                                                             />
                                                         </Link>
                                                     </SwiperSlide>
@@ -154,7 +224,6 @@ const Products = () => {
                                                 {product.Images.map((image, idx) => (
                                                     <SwiperSlide key={idx}>
                                                         <Link to='/product'>
-
                                                             <img
                                                                 src={`${apiurl()}/${image}`}
                                                                 alt={`Product Image ${idx}`}
